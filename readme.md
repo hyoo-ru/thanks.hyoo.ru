@@ -1,3 +1,3 @@
 # [$hyoo_thanks](https://thanks.hyoo.ru/)
 
-Fair auto domation.
+Fair auto donations.
