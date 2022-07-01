@@ -1,4 +1,16 @@
+chrome.action.onClicked.addListener( tab => {
+	
+	chrome.tabs.create({
+		url: 'https://thanks.hyoo.ru/'
+	})
+	
+} )
+
+chrome.action.disable()
+
 chrome.runtime.onConnect.addListener( content => {
+	
+	chrome.action.enable( content.sender.tab.id )
 	
 	content.onMessage.addListener( msg => {
 		
