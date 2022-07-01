@@ -1,0 +1,9 @@
+{
+  "name": "$hyoo_thanks",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Fair auto domations.",
+  "icons": {
+    "128": "thanks.png"
+  }
+}
