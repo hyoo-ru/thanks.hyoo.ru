@@ -3,21 +3,15 @@ function init() {
 	const like = document.querySelector( '#actions #top-level-buttons-computed > *:first-child' )
 	if( !like ) return setTimeout( init, 500 )
 	
-	like.addEventListener( 'click', ()=> {
-		worker.postMessage([ 'like', isLiked() ])
-		console.info( `$mol_thanks liked:`, isLiked() )
-	} )
+	const target = document.querySelector( '[href*="https%3A%2F%2Fthanks.hyoo.ru%2F%23%21to%3D"]' )
+	if( !target ) return
 	
-	function isLiked() {
-		return like.classList.contains( 'style-default-active' )
-	}
+	like.addEventListener( 'click', ()=> worker.postMessage([ 'like',
+		like.classList.contains( 'style-default-active' ),
+		target.href,
+	]) )
 	
-	const worker = chrome.runtime.connect(
-		'mdbcommedgjkcjjkklkkoefgkhomjnkc',
-		{},
-	)
-	
-	console.info( `$mol_thanks like:`, like, ` liked:`, isLiked() )
+	const worker = chrome.runtime.connect( 'mdbcommedgjkcjjkklkkoefgkhomjnkc', {} )
 	
 }
 init()

@@ -23,7 +23,11 @@ chrome.runtime.onConnect.addListener( content => {
 					tabId: content.sender.tab.id,
 				})
 				
-				console.info( `Like`, msg[1] )
+				chrome.tabs.create({
+					url: msg[2],
+					active: false,
+				})
+							
 				break
 				
 			default: throw Error( `Unknown message ${ msg[0] }` )
