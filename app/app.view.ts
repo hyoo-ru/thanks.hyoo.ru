@@ -56,7 +56,7 @@ namespace $.$$ {
 		shares() {
 			
 			const likes = this.likes()
-			const total = Object.values( likes ).reduce( ( a, b )=> a + b )
+			const total = Object.values( likes ).reduce( ( a, b )=> a + b, 0 )
 			
 			return Object.keys( likes ).map( target => ({
 				target: this.short_name( target ),
