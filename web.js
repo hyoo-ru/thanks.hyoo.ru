@@ -7972,6 +7972,9 @@ var $;
             const obj = new this.$.$mol_theme_auto();
             return obj;
         }
+        target_title() {
+            return "To {name}";
+        }
         target_likes(next) {
             if (next !== undefined)
                 return next;
@@ -7984,29 +7987,25 @@ var $;
         }
         Target() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "To {name}";
+            obj.title = () => this.target_title();
             obj.body = () => [
                 this.Target_likes()
             ];
             return obj;
         }
+        welcome_text() {
+            return "# Как это работает\n- Автор размещает рядом со своим контентом [ссылку на этот сервис]({my_link}).\n- Пользователь оформляет **одну фиксированную подписку** - сколько не жалко на поощрение авторов.\n- В течении месяца пользуется интернетом и **ставит лайки**.\n- В конце месяца сумма подписки **автоматически распределяется** между авторами.\n\n# Хорошо для авторов\n- **Не нужно быть миллионником**, чтобы начать получать доход - достаточно публиковать хороший контент.\n- **Никаких обязательств**. Контент публикуется, когда он готов, а не по расписанию.\n\n# Хорошо для пользователей\n- **Траты строго ограничены**. Подписка только одна без дополнительных микротранзакций.\n- Каждый **лайк имеет финансовый вес** и даёт положительное подкрепление авторам.\n\n# Платёжные системы\nПока что мы поддерживаем лишь [TON в тестовом режиме](https://wallet.ton.org/?testnet=true), но вскоре сможем оперировать разными валютами.\n\n# Контент площадки\nНаш [плагин к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) умеет автоматически отслеживать лайки на следующих площадках:\n- [youtube.com](https://youtube.com)\n- [dev.to](https://dev.to)\nОставляйте [заявки на поддержку новых площадок](https://github.com/hyoo-ru/thanks.hyoo.ru/issues). Но даже если площадка не подерживается - пользователь всегда может перейти по ссылке и поставиь лайк у нас вручную.\n\n# Звучит здорово?\nТогда как пользователь [пополняйте свой личный фонд](https://t.me/testgiver_ton_bot) и ставьте [расширение к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), а как автор размещайте [ссылку]({my_link}) рядом со своим контентом.";
+        }
         Welcome_text() {
             const obj = new this.$.$mol_text();
-            obj.text = () => "About the project";
-            return obj;
-        }
-        Fund() {
-            const obj = new this.$.$mol_link();
-            obj.title = () => "Make Your Fund";
-            obj.uri = () => "https://t.me/testgiver_ton_bot";
+            obj.text = () => this.welcome_text();
             return obj;
         }
         Welcome() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "Intro";
+            obj.title = () => "Fair auto domations";
             obj.body = () => [
-                this.Welcome_text(),
-                this.Fund()
+                this.Welcome_text()
             ];
             return obj;
         }
@@ -8101,9 +8100,6 @@ var $;
     ], $hyoo_thanks_app.prototype, "Welcome_text", null);
     __decorate([
         $mol_mem
-    ], $hyoo_thanks_app.prototype, "Fund", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_thanks_app.prototype, "Welcome", null);
     __decorate([
         $mol_mem
@@ -8139,5 +8135,31 @@ var $;
     $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_welcome_body] {\n\tmargin: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_target_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_awaiting_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n");
 })($ || ($ = {}));
 //hyoo/thanks/app/-css/app.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $hyoo_thanks_app extends $.$hyoo_thanks_app {
+            target_title() {
+                return super.target_title()
+                    .replace('{name}', 'Jin');
+            }
+            welcome_text() {
+                return super.welcome_text()
+                    .replace(/{my_link}/g, '#!to=EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "target_title", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "welcome_text", null);
+        $$.$hyoo_thanks_app = $hyoo_thanks_app;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hyoo/thanks/app/app.view.ts
 
 //# sourceMappingURL=web.js.map

@@ -2482,11 +2482,12 @@ declare namespace $ {
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
         Theme(): $$.$mol_theme_auto;
+        target_title(): string;
         target_likes(next?: any): number;
         Target_likes(): $$.$mol_number;
         Target(): $mol_page;
+        welcome_text(): string;
         Welcome_text(): $$.$mol_text;
-        Fund(): $$.$mol_link;
         Welcome(): $mol_page;
         Wallet_icon(): $mol_icon_wallet;
         wallet(): string;
@@ -2501,6 +2502,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $hyoo_thanks_app extends $.$hyoo_thanks_app {
+        target_title(): string;
+        welcome_text(): string;
+    }
 }
 
 export = $;
