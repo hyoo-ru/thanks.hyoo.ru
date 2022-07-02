@@ -42,9 +42,7 @@ $hyoo_thanks_app $mol_book2_catalog
 							\Пока что мы поддерживаем лишь [TON в тестовом режиме](https://wallet.ton.org/?testnet=true), но вскоре сможем оперировать разными валютами.
 							\
 							\# Контент площадки
-							\Наш [плагин к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) умеет автоматически отслеживать лайки на следующих площадках:
-							\- [youtube.com](https://youtube.com)
-							\- [dev.to](https://dev.to)
+							\Наш [плагин к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) умеет автоматически отслеживать лайки на следующих площадках: [YouTube](https://youtube.com), [DevTo](https://dev.to).
 							\Оставляйте [заявки на поддержку новых площадок](https://github.com/hyoo-ru/thanks.hyoo.ru/issues). Но даже если площадка не подерживается - пользователь всегда может перейти по ссылке и поставиь весомый лайк у нас вручную.
 							\
 							\# Звучит здорово?
@@ -57,7 +55,7 @@ $hyoo_thanks_app $mol_book2_catalog
 					uri \https://wallet.ton.org/?testnet=true
 					sub /
 						<= Wallet_icon $mol_icon_wallet
-						<= wallet \1000 TON
+						<= wallet \0 TON
 			body /
 				<= Subscription_block $mol_labeler
 					title \Monthly Subscription (TON)
@@ -66,12 +64,4 @@ $hyoo_thanks_app $mol_book2_catalog
 				<= Awaiting_targets_block $mol_labeler
 					title \This Month Shares
 					Content <= Awaiting_targets $mol_grid
-						records /
-							*
-								name \Jin
-								likes 9
-								share \90 %
-							*
-								name \John
-								likes 1
-								share \10 %
+						records <= shares /
