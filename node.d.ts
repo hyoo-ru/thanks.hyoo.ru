@@ -2525,6 +2525,7 @@ declare namespace $ {
         spreads(): {
             "": $mol_page;
             awaiting: $mol_page;
+            story: $mol_page;
         };
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -2546,6 +2547,9 @@ declare namespace $ {
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
         Awaiting(): $mol_page;
+        story_text(): string;
+        Story_text(): $$.$mol_text;
+        Story(): $mol_page;
     }
 }
 
