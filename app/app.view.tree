@@ -15,7 +15,7 @@ $hyoo_thanks_app $mol_book2_catalog
 				<= Target_likes $mol_number
 					value? <=> target_likes? 0
 		welcome <= Welcome $mol_page
-			title \Fair auto domations
+			title \Fair auto donations
 			body /
 				<= Welcome_text $mol_text
 					text <= welcome_text \
