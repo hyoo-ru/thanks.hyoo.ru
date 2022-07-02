@@ -2542,6 +2542,7 @@ declare namespace $ {
         subscription(next?: any): number;
         Subscription(): $$.$mol_number;
         Subscription_block(): $mol_labeler;
+        shares(): readonly any[];
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
         Awaiting(): $mol_page;
@@ -2560,8 +2561,17 @@ declare namespace $.$$ {
         spreads(): any;
         target(): string;
         target_name(): string;
+        short_name(name: string): string;
         target_title(): string;
         welcome_text(): string;
+        likes(next?: Record<string, number>): Record<string, number>;
+        subscription(next?: number): number;
+        target_likes(next?: number): number;
+        shares(): {
+            target: string;
+            likes: number;
+            shares: string;
+        }[];
     }
 }
 

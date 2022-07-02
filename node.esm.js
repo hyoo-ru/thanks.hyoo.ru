@@ -8342,7 +8342,7 @@ var $;
             return obj;
         }
         welcome_text() {
-            return "# Как это работает\n- Автор размещает рядом со своим контентом [ссылку на этот сервис]({my_link}).\n- Пользователь оформляет **одну фиксированную подписку** - сколько не жалко на поощрение авторов.\n- В течении месяца пользуется интернетом и **ставит лайки**.\n- В конце месяца сумма подписки **автоматически распределяется** между авторами.\n\n# Хорошо для авторов\n- **Не нужно быть миллионником**, чтобы начать получать доход - достаточно публиковать хороший контент.\n- **Никаких обязательств**. Контент публикуется, когда он готов, а не по расписанию.\n\n# Хорошо для пользователей\n- **Траты строго ограничены**. Подписка только одна без дополнительных микротранзакций.\n- Каждый **лайк имеет финансовый вес** и даёт положительное подкрепление авторам.\n\n# Платёжные системы\nПока что мы поддерживаем лишь [TON в тестовом режиме](https://wallet.ton.org/?testnet=true), но вскоре сможем оперировать разными валютами.\n\n# Контент площадки\nНаш [плагин к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) умеет автоматически отслеживать лайки на следующих площадках:\n- [youtube.com](https://youtube.com)\n- [dev.to](https://dev.to)\nОставляйте [заявки на поддержку новых площадок](https://github.com/hyoo-ru/thanks.hyoo.ru/issues). Но даже если площадка не подерживается - пользователь всегда может перейти по ссылке и поставиь весомый лайк у нас вручную.\n\n# Звучит здорово?\nТогда как пользователь [пополняйте свой личный фонд](https://t.me/testgiver_ton_bot) и ставьте [расширение к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), а как автор размещайте [ссылку]({my_link}) рядом со своим контентом.";
+            return "# Как это работает\n- Автор размещает рядом со своим контентом [ссылку на этот сервис]({my_link}).\n- Пользователь оформляет **одну фиксированную подписку** - сколько не жалко на поощрение авторов.\n- В течении месяца пользуется интернетом и **ставит лайки**.\n- В конце месяца сумма подписки **автоматически распределяется** между авторами.\n\n# Хорошо для авторов\n- **Не нужно быть миллионником**, чтобы начать получать доход - достаточно публиковать хороший контент.\n- **Никаких обязательств**. Контент публикуется, когда он готов, а не по расписанию.\n\n# Хорошо для пользователей\n- **Траты строго ограничены**. Подписка только одна без дополнительных микротранзакций.\n- Каждый **лайк имеет финансовый вес** и даёт положительное подкрепление авторам.\n\n# Платёжные системы\nПока что мы поддерживаем лишь [TON в тестовом режиме](https://wallet.ton.org/?testnet=true), но вскоре сможем оперировать разными валютами.\n\n# Контент площадки\nНаш [плагин к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) умеет автоматически отслеживать лайки на следующих площадках: [YouTube](https://youtube.com), [DevTo](https://dev.to).\nОставляйте [заявки на поддержку новых площадок](https://github.com/hyoo-ru/thanks.hyoo.ru/issues). Но даже если площадка не подерживается - пользователь всегда может перейти по ссылке и поставиь весомый лайк у нас вручную.\n\n# Звучит здорово?\nТогда как пользователь [пополняйте свой личный фонд](https://t.me/testgiver_ton_bot) и ставьте [расширение к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), а как автор размещайте [ссылку]({my_link}) рядом со своим контентом.";
         }
         Welcome_text() {
             const obj = new this.$.$mol_text();
@@ -8362,7 +8362,7 @@ var $;
             return obj;
         }
         wallet() {
-            return "1000 TON";
+            return "0 TON";
         }
         Wallet() {
             const obj = new this.$.$mol_link();
@@ -8390,20 +8390,12 @@ var $;
             obj.Content = () => this.Subscription();
             return obj;
         }
+        shares() {
+            return [];
+        }
         Awaiting_targets() {
             const obj = new this.$.$mol_grid();
-            obj.records = () => [
-                {
-                    name: "Jin",
-                    likes: 9,
-                    share: "90 %"
-                },
-                {
-                    name: "John",
-                    likes: 1,
-                    share: "10 %"
-                }
-            ];
+            obj.records = () => this.shares();
             return obj;
         }
         Awaiting_targets_block() {
@@ -8524,7 +8516,10 @@ var $;
                 return this.$.$mol_state_arg.value('to') ?? '';
             }
             target_name() {
-                return $mol_hash_string(this.target()).toString(36).toUpperCase();
+                return this.short_name(this.target());
+            }
+            short_name(name) {
+                return $mol_hash_string(name).toString(36).toUpperCase();
             }
             target_title() {
                 return super.target_title()
@@ -8534,6 +8529,24 @@ var $;
                 return super.welcome_text()
                     .replace(/{my_link}/g, '#!to=EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7/section=target');
             }
+            likes(next) {
+                return this.$.$mol_state_local.value('likes', next) ?? {};
+            }
+            subscription(next) {
+                return this.$.$mol_state_local.value('subscription', next) ?? 10;
+            }
+            target_likes(next) {
+                return this.likes(next?.valueOf && { ...this.likes(), [this.target()]: next })[this.target()] ?? 0;
+            }
+            shares() {
+                const likes = this.likes();
+                const total = Object.values(likes).reduce((a, b) => a + b);
+                return Object.keys(likes).map(target => ({
+                    target: this.short_name(target),
+                    likes: likes[target],
+                    shares: `${Math.round(likes[target] / total * 100)} %`,
+                }));
+            }
         }
         __decorate([
             $mol_mem
@@ -8542,11 +8555,26 @@ var $;
             $mol_mem
         ], $hyoo_thanks_app.prototype, "target_name", null);
         __decorate([
+            $mol_mem_key
+        ], $hyoo_thanks_app.prototype, "short_name", null);
+        __decorate([
             $mol_mem
         ], $hyoo_thanks_app.prototype, "target_title", null);
         __decorate([
             $mol_mem
         ], $hyoo_thanks_app.prototype, "welcome_text", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "likes", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "subscription", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "target_likes", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "shares", null);
         $$.$hyoo_thanks_app = $hyoo_thanks_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
