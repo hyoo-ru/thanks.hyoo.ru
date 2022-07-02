@@ -11,7 +11,7 @@ function init() {
 	like.addEventListener( 'click', ()=> worker.postMessage({
 		type: 'like',
 		liked: like.classList.contains( 'style-default-active' ),
-		target: target.href,
+		target: new URL( target.href ).searchParams.get( 'q' ),
 	}) )
 	
 }
