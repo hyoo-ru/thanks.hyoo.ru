@@ -1,0 +1,36 @@
+$hyoo_thanks_app $mol_book2_catalog
+	menu_title \$hyoo_thanks
+	spreads *
+		target <= Target $mol_page
+			title \To {name}
+			body /
+				<= Target_likes $mol_number
+					value? <=> target_likes? 0
+		welcome <= Welcome $mol_page
+			title \Intro
+			body /
+				<= Welcome_text $mol_text
+					text \
+						\About the project
+				<= Fund $mol_button_major
+					title \Make Your Fund
+					click? <=> func? null
+		awaiting <= Awaiting $mol_page
+			title \Awaiting
+			body /
+				<= Subscription_block $mol_labeler
+					title \Monthly Subscription (TON)
+					Content <= Subscription $mol_number
+						value? <=> subscription? 10
+				<= Awaiting_targets_block $mol_labeler
+					title \This Month Shares
+					Content <= Awaiting_targets $mol_grid
+						records /
+							*
+								name \Jin
+								likes 9
+								share \90 %
+							*
+								name \John
+								likes 1
+								share \10 %
