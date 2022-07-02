@@ -31,6 +31,7 @@ $hyoo_thanks_app $mol_book2_catalog
 					uri \https://wallet.ton.org/?testnet=true
 					sub /
 						<= Wallet_icon $mol_icon_wallet
+						<= wallet \1000 TON
 			body /
 				<= Subscription_block $mol_labeler
 					title \Monthly Subscription (TON)
