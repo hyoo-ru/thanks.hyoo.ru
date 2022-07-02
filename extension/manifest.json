@@ -12,8 +12,12 @@
 	},
 	"content_scripts": [
 		{
-		"matches": ["https://*.youtube.com/*"],
-		"js": ["content.js"]
+			"matches": ["https://*.youtube.com/*"],
+			"js": ["sites/youtube.com.js"]
+		},
+		{
+			"matches": ["https://dev.to/*"],
+			"js": ["sites/dev.to.js"]
 		}
 	],
 	"action": {}

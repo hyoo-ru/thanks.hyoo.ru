@@ -14,23 +14,23 @@ chrome.runtime.onConnect.addListener( content => {
 	
 	content.onMessage.addListener( msg => {
 		
-		switch( msg[0] ) {
+		switch( msg.type ) {
 			
 			case 'like':
 				
 				chrome.action.setBadgeText({
-					text: msg[1] ? '💲' : '',
+					text: msg.liked ? '💲' : '',
 					tabId: content.sender.tab.id,
 				})
 				
 				chrome.tabs.create({
-					url: msg[2],
+					url: msg.target,
 					active: false,
 				})
 							
 				break
 				
-			default: throw Error( `Unknown message ${ msg[0] }` )
+			default: throw Error( `Unknown message ${ msg.type }` )
 		}
 		
 	} )
