@@ -6,9 +6,7 @@ $hyoo_thanks_app_test $mol_page
 		<= Wallet_create $mol_button_major
 			title \Create wallet
 			click? <=> wallet_create? null
-		<= Wallet $mol_list
-			rows /
-				<= Wallet_private $mol_view sub / <= wallet_private \
-				<= Wallet_public $mol_view sub / <= wallet_public \
-				<= Wallet_address $mol_view sub / <= wallet_address \
+		<= Send $mol_button_major
+			title \Send
+			click? <=> send? null
 
