@@ -17,11 +17,7 @@ namespace $.$$ {
 		}
 
 		send() {
-			this.wallet().send(
-				'EQCJ8v-iq5PmU06yDlsiTFQ6n9qtIWdUamAAoG3RBKuruZKJ',
-				$mol_ton.lib().utils.toNano('0.01'),
-				'hello' + new Date().toString(),
-			)
+			this.wallet().send()
 		}
 
 		@ $mol_mem
