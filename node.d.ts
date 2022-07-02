@@ -2516,13 +2516,14 @@ declare namespace $ {
 
 declare namespace $ {
     class $hyoo_thanks_app extends $mol_book2_catalog {
+        target(next?: any): string;
         menu_title(): string;
         menu_tools(): readonly any[];
         plugins(): readonly any[];
         param(): string;
+        Target(): $mol_page;
         spreads(): {
-            target: $mol_page;
-            welcome: $mol_page;
+            "": $mol_page;
             awaiting: $mol_page;
         };
         Source(): $mol_link_source;
@@ -2531,7 +2532,7 @@ declare namespace $ {
         target_title(): string;
         target_likes(next?: any): number;
         Target_likes(): $$.$mol_number;
-        Target(): $mol_page;
+        target_hint(): $$.$mol_link;
         welcome_text(): string;
         Welcome_text(): $$.$mol_text;
         Welcome(): $mol_page;
@@ -2548,10 +2549,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_hash_string(str: string, seed?: number): number;
+}
+
+declare namespace $ {
 }
 
 declare namespace $.$$ {
     class $hyoo_thanks_app extends $.$hyoo_thanks_app {
+        spreads(): any;
+        target(): string;
+        target_name(): string;
         target_title(): string;
         welcome_text(): string;
     }
