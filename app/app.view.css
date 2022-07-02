@@ -1,4 +1,4 @@
-[hyoo_thanks_app_welcome_body] > * {
+[hyoo_thanks_app_welcome_body] {
 	margin: var(--mol_gap_block);
 }
 
