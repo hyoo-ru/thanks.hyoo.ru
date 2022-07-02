@@ -17,7 +17,7 @@ jobs:
       with:
         token: ${{ secrets.GH_PAT }}
         package: 'hyoo/thanks'
-		modules: 'app'
+        modules: 'app'
     
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
