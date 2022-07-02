@@ -2535,6 +2535,7 @@ declare namespace $ {
         Fund(): $$.$mol_link;
         Welcome(): $mol_page;
         Wallet_icon(): $mol_icon_wallet;
+        wallet(): string;
         Wallet(): $$.$mol_link;
         subscription(next?: any): number;
         Subscription(): $$.$mol_number;

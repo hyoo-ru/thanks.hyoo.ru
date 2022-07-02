@@ -8014,12 +8014,16 @@ var $;
             const obj = new this.$.$mol_icon_wallet();
             return obj;
         }
+        wallet() {
+            return "1000 TON";
+        }
         Wallet() {
             const obj = new this.$.$mol_link();
             obj.hint = () => "Wallet";
             obj.uri = () => "https://wallet.ton.org/?testnet=true";
             obj.sub = () => [
-                this.Wallet_icon()
+                this.Wallet_icon(),
+                this.wallet()
             ];
             return obj;
         }
