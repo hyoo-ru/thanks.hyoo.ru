@@ -37,7 +37,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		likes( next?: Record< string, number > ) {
-			return this.$.$mol_state_local.value( 'likes', next ) ?? {}
+			return this.$.$mol_state_local.value( 'likes', next ) ?? {
+				'EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7': 1,
+			}
 		}
 		
 		@ $mol_mem
