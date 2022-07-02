@@ -10,83 +10,83 @@ $hyoo_thanks_app $mol_book2_catalog
 		<= Theme $mol_theme_auto
 	param \section
 	Target $mol_page
-		title <= target_title \Like {name}
+		title <= target_title @ \Thanks {name}
 		body /
 			<= Target_likes $mol_number
 				value? <=> target_likes? 0
 			<= target_hint $mol_link
 				arg * section null
-				title \What is it?
+				title @ \What is it?
 	spreads *
 		\
 			<= Welcome $mol_page
-				title \Fair auto donations
+				title @ \Fair auto donations
 				body /
 					<= Welcome_text $mol_text
-						text <= welcome_text \
-							\# Как это работает
-							\- Автор размещает рядом со своим контентом [ссылку на этот сервис]({my_link}).
-							\- Пользователь оформляет **одну фиксированную подписку** - сколько не жалко на поощрение авторов.
-							\- В течении месяца пользуется интернетом и **ставит лайки**.
-							\- В конце месяца сумма подписки **автоматически распределяется** между авторами.
+						text <= welcome_text @ \
+							\# How it works
+							\- The author places [a link to this service]({my_link}) next to their content.
+							\- The user signs up for **one fixed subscription** - as much as you can afford to encourage authors.
+							\- During the month, they uses the Internet and **sticks the likes**.
+							\- At the end of the month, the subscription amount is **automatically distributed** among the authors.
 							\
-							\# Хорошо для авторов
-							\- **Не нужно быть миллионником**, чтобы начать получать доход - достаточно публиковать хороший контент.
-							\- **Никаких обязательств**. Контент публикуется, когда он готов, а не по расписанию.
-							\- **Не приходится ухудшать** контент разбавляя его рекламой.
+							\# Good for authors
+							\- **No need to be a millionaire** to start earning an income - just publish good content.
+							\- **No obligation**. Content is published when it's ready, not on a schedule.
+							\- **No need to degrade** content by diluting it with ads.
 							\
-							\# Хорошо для пользователей
-							\- **Траты строго ограничены**. Подписка только одна без дополнительных микротранзакций.
-							\- Каждый **лайк имеет финансовый вес** и даёт положительное подкрепление авторам.
+							\# Good for the users
+							\- **Spending is strictly limited**. Only one subscription with no additional microtransactions.
+							\- Each **link has financial weight** and gives positive reinforcement to authors.
 							\
-							\# Платёжные системы
-							\Пока что мы поддерживаем лишь [TON в тестовом режиме](https://wallet.ton.org/?testnet=true), но вскоре сможем оперировать разными валютами.
+							\#Payment Systems
+							\For now we only support [TON in test mode](https://wallet.ton.org/?testnet=true), but soon we will be able to operate with different currencies.
 							\
-							\# Контент площадки
-							\Наш [плагин к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) умеет автоматически отслеживать лайки на следующих площадках: [YouTube](https://youtube.com), [DevTo](https://dev.to).
-							\Оставляйте [заявки на поддержку новых площадок](https://github.com/hyoo-ru/thanks.hyoo.ru/issues). Но даже если площадка не подерживается - пользователь всегда может перейти по ссылке и поставиь весомый лайк у нас вручную.
+							\# Site content
+							\Our [browser plugin](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension) can automatically track likes on the following sites: [YouTube](https://youtube.com), [DevTo](https://dev.to).
+							\Submit [requests to support new sites](https://github.com/hyoo-ru/thanks.hyoo.ru/issues). But even if a site isn't supported - the user can always follow the link and give us a weighty like by hand.
 							\
-							\# Звучит здорово?
-							\Тогда как пользователь [пополняйте свой личный фонд](https://t.me/testgiver_ton_bot) и ставьте [расширение к браузеру](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), а как автор размещайте [ссылку]({my_link}) рядом со своим контентом.
+							\# Sounds great?
+							\Then as a user [recharge your personal fund](https://t.me/testgiver_ton_bot) and put [browser extension](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), and as an author, put [link]({my_link}) next to your content.
 		awaiting <= Awaiting $mol_page
-			title \Subscription
+			title @ \Subscription
 			tools /
 				<= Wallet $mol_link
-					hint \Wallet
+					hint @ \Wallet
 					uri \https://wallet.ton.org/?testnet=true
 					sub /
 						<= Wallet_icon $mol_icon_wallet
-						<= wallet \0 TON
+						<= wallet \200 TON
 			body /
 				<= Subscription_block $mol_labeler
-					title \Monthly Subscription (TON)
+					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
 						value? <=> subscription? 10
 				<= Awaiting_targets_block $mol_labeler
-					title \This Month Shares
+					title @ \This Month Shares
 					Content <= Awaiting_targets $mol_grid
 						records <= shares /
 		story <= Story $mol_page
-			title \Arnold's Story
+			title @ \Arnold's Story
 			body /
 				<= Story_text $mol_text
-					text <= story_text \
-						\Арнольд - типичный пользователь интернета. Он читает статьи, смотрит видосы, пользуется веб-сервисами. У него есть небольшая сумма в 100 фантиков, которую он готов тратить на поощрение тех авторов, что делают его жизнь лучше.
+					text <= story_text @ \
+						\Arnold is a typical Internet user. He reads articles, watches videos, and uses web services. He has a small amount of 100 notes, which he is willing to spend to encourage those authors who make his life better.
 						\
-						\Решил он выдавать каждому автору по 10 фантиков. Глянул в конце месяца с ужасом обнаружил, что потратил 1000 фантиков. Поэтому следующий месяц он голодал.
+						\He decides to give each author 10 candy canes. He looked at the end of the month and was horrified to find that he had spent 1000 candy wrappers. So for the next month he starved.
 						\
-						\Но Арнольд не унывал, и в следующем месяце он решил выплачивать уже по 1 фантику. Но этот месяц оказался бедным на контент, поэтому потратил он всего 20 фантиков. Уже лучше, но оставшиеся 80 фантиков было бы не плохо потратить на мотивацию авторов, чтобы Арнольду было не так грустно жить.
+						\But Arnold was not discouraged, and the next month he decided to pay out 1 candy bar each. But this month was poor for content, so he spent only 20 candy canes. That's better, but the remaining 80 candy canes could have been used to motivate the authors, so Arnold wouldn't be so sad to live.
 						\
-						\Но Арнольд был инициативным, поэтому в следующем месяце он стал записывать кто сколько хорошего ему сделал, а в конце месяца потратил пол дня на то, чтобы рассчитаться со всеми авторами. Умаялся он от этого дела. А как представил, что каждый месяц будет этим заниматься, решил, что это никуда не годится, и надо искать альтернативы.
+						\But Arnold was enterprising, so the next month he began writing down who did him good, and at the end of the month he spent half a day to settle accounts with all the authors. He got tired of it. And when he imagined that he would have to do it every month, he decided that it was no good and he needed to look for alternatives.
 						\
-						\Решил Арнольд в следующем месяце попробовать подписки. Потратил пол дня, чтобы выбрать 100 наиболее интересных ему авторов и подписаться на них. Но вот незадача, Только 5 из них в этом месяце действительно выпустили интересный ему контент, а остальные просто так 95 получили поощрение, выпуская не интересный ему контент. Более того, 80% интересного ему контента опубликовали авторы, на которых подписки не были оформлены. И тут он приуныл, понимая, что каждый месяц ему предстоит делать ребалансировку подписок, что будет тратить много сил.
+						\Arnold decided to try subscriptions next month. He spent half a day choosing the 100 authors he was most interested in and subscribing to them. But here's the trouble, only 5 of them really released the content interesting to him this month, and the rest were just so 95 rewarded by releasing content not interesting to him. What's more, 80% of the content he was interested in was published by authors who didn't have subscriptions. And then he got discouraged, realizing that every month he would have to rebalance subscriptions, which would waste a lot of effort.
 						\
-						\Но беда не приходит одна - Арнольда уволили с работы. Это ограничило его в финансах, но дало много свободного времени. А раз он был творческим человеком, то решил он сам делать контент и зарабатывать на этом. Следующий месяц он он публиковал новые, хорошие, уникальные материалы. Аудитория их хорошо лайкала, но никто не то, что не оформил на него подписку, но даже не прислал ни одного доната, так как аудитория у него была ещё очень маленькая и ленивая. Денег на раскрутку у него уже нет, мотивации делать контент - тоже.
+						\But misfortune doesn't come alone - Arnold was laid off from his job. This limited his finances, but gave him a lot of free time. And since he was creative, he decided to make his own content and make money from it. For the next month he published new, good, unique content. Audience well-liked them, but no one not only did not subscribe to it, but did not even send a single donation, because his audience was still very small and lazy. He no longer had the money to promote it, nor the motivation to make content.
 						\
-						\И постигло бы Арнольда полное разочарование, если бы не наткнулся он на $hyoo_thanks под одним из интересных ему материалов. "Да это же то, что надо" - воскликнул он и добавил ссылку на него и под каждым своим материалом. Люди приходили, лайкали, а ему в конце месяца пришло целых 10 фантиков.
+						\Arnold would have been totally disappointed if he hadn't stumbled upon $hyoo_thanks under one of his interesting materials. "This is it," he exclaimed, and added a link to it to every piece he wrote. People came, liked it, and he got as many as 10 fanfictions at the end of the month.
 						\
-						\Это дало Арнольду мотивацию продолжать творить. Ещё больше да качественнее. Аудитория росла. И уже через год его доход составил более 100 фантиков в месяц. 10 из них он решил и сам уже тратить на донаты, для чего оформил подписку в $hyoo_thanks.
+						\That gave Arnold the motivation to keep creating. More and better. His audience grew. And after a year, his income was over 100 candy wrappers a month. 10 of them he decided to spend on donations himself, so he subscribed to $hyoo_thanks.
 						\
-						\Благодаря браузерному расширению, $hyoo_thanks отслеживает какие материалы Арнольду пришлись по вкусу, а в конце месяца автоматически делит фиксированную сумму в 10 фантиков пропорционально между всеми авторами, кто в этом месяце делал его жизнь чуточку лучше.
+						\Thanks to a browser plug-in, $hyoo_thanks keeps track of what Arnold liked, and at the end of the month automatically divides a fixed amount of 10 vanish coins proportionally between all the authors who made his life a little bit better this month.
 						\
-						\Больше никакая рутина больше не отвлекала Арнольда от творчества - только теперь он почувствовал себя по настоящему свободным человеком. А интересного и качественного контента в сети стало существенно больше. Пусть даже вклад самого Арнольда в это был и совсем незначительным.
+						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.

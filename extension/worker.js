@@ -1,7 +1,7 @@
 chrome.action.onClicked.addListener( tab => {
 	
 	chrome.tabs.create({
-		url: 'https://thanks.hyoo.ru/'
+		url: 'https://thanks.hyoo.ru/#!section=awaiting'
 	})
 	
 } )
