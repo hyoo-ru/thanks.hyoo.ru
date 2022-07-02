@@ -1,5 +1,13 @@
 $hyoo_thanks_app $mol_book2_catalog
 	menu_title \$hyoo_thanks
+	menu_tools /
+		<= Source $mol_link_source
+			uri \https://github.com/hyoo-ru/thanks.hyoo.ru
+		<= Lights $mol_lights_toggle
+	plugins /
+		^
+		<= Theme $mol_theme_auto
+	param \section
 	spreads *
 		target <= Target $mol_page
 			title \To {name}
@@ -12,11 +20,17 @@ $hyoo_thanks_app $mol_book2_catalog
 				<= Welcome_text $mol_text
 					text \
 						\About the project
-				<= Fund $mol_button_major
+				<= Fund $mol_link
 					title \Make Your Fund
-					click? <=> func? null
+					uri \https://t.me/testgiver_ton_bot
 		awaiting <= Awaiting $mol_page
 			title \Awaiting
+			tools /
+				<= Wallet $mol_link
+					hint \Wallet
+					uri \https://wallet.ton.org/?testnet=true
+					sub /
+						<= Wallet_icon $mol_icon_wallet
 			body /
 				<= Subscription_block $mol_labeler
 					title \Monthly Subscription (TON)
