@@ -8338,7 +8338,7 @@ var $;
         }
         Welcome() {
             const obj = new this.$.$mol_page();
-            obj.title = () => "Fair auto domations";
+            obj.title = () => "Fair auto donations";
             obj.body = () => [
                 this.Welcome_text()
             ];
