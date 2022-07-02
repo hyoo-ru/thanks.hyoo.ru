@@ -12,7 +12,7 @@ chrome.runtime.onConnect.addListener( content => {
 	
 	chrome.action.enable( content.sender.tab.id )
 	
-	content.onMessage.addListener( msg => {
+	content.onMessage.addListener( async ( msg )=> {
 		
 		switch( msg.type ) {
 			
@@ -23,11 +23,21 @@ chrome.runtime.onConnect.addListener( content => {
 					tabId: content.sender.tab.id,
 				})
 				
-				chrome.tabs.create({
+				const app = await chrome.tabs.create({
 					url: msg.target,
 					active: false,
 				})
-							
+				
+				await chrome.scripting.executeScript({
+					target: { tabId: app.id },
+					world: 'MAIN',
+					func: msg.liked
+						? ()=> $mol_wire_async( $hyoo_thanks_app.Root(0).Target_likes() ).event_inc()
+						: ()=> $mol_wire_async( $hyoo_thanks_app.Root(0).Target_likes() ).event_dec()
+				} )
+				
+				await chrome.tabs.remove( app.id )
+				
 				break
 				
 			default: throw Error( `Unknown message ${ msg.type }` )

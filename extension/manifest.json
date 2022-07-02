@@ -6,7 +6,8 @@
 	"icons": {
 		"128": "thanks.png"
 	},
-	"permissions": [ "windows", "tabs", "storage", "*://*/*" ],
+	"permissions": [ "windows", "tabs", "storage", "scripting" ],
+	"host_permissions": [ "https://thanks.hyoo.ru/*" ],
 	"background": {
 		"service_worker": "worker.js"
 	},
