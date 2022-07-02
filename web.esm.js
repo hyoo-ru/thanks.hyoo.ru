@@ -8195,7 +8195,9 @@ var $;
                     .replace(/{my_link}/g, '#!to=EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7/section=target');
             }
             likes(next) {
-                return this.$.$mol_state_local.value('likes', next) ?? {};
+                return this.$.$mol_state_local.value('likes', next) ?? {
+                    'EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7': 1,
+                };
             }
             subscription(next) {
                 return this.$.$mol_state_local.value('subscription', next) ?? 10;
