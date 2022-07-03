@@ -8781,7 +8781,6 @@ var $;
         Subscription() {
             const obj = new this.$.$mol_number();
             obj.value = (next) => this.subscription(next);
-            obj.precision = () => 0.1;
             return obj;
         }
         Subscription_block() {
