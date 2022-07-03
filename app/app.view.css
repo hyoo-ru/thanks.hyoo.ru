@@ -13,3 +13,12 @@
 [hyoo_thanks_app_awaiting_body] > * {
 	padding: var(--mol_gap_block);
 }
+
+[hyoo_thanks_app_person_body] > * {
+	padding: var(--mol_gap_block);
+}
+
+[hyoo_thanks_app_person] {
+	flex-basis: 18rem;
+	flex-shrink: 0;
+}

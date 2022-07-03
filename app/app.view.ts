@@ -67,6 +67,22 @@ namespace $.$$ {
 			}) )
 			
 		}
+
+		person_name(next?: string) {
+			return this.user().name(next)
+		}
+
+		person_wallet() {
+			return this.user().wallet().address().toString(true, true, true)
+		}
+
+		person_wallet_balance() {
+			return this.user().wallet().balance()
+		}
+
+		auto() {
+			this.domain().state().socket()
+		}
 		
 	}
 	
