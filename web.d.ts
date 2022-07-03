@@ -2858,7 +2858,7 @@ declare namespace $.$$ {
         wallet_words(next?: string[]): any;
         import_label(): string;
         import_wallet(): void;
-        wallet_keys(): nacl.SignKeyPair | null;
+        wallet_keys(): any;
         awaiting_tools(): $mol_link[];
         awaiting_body(): $mol_labeler[];
         wallet(): $mol_ton_wallet;

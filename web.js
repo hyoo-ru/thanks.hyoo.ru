@@ -9523,9 +9523,9 @@ var $;
                 this.wallet_words(this.import_words().split(/\s+/).filter(Boolean));
             }
             wallet_keys() {
-                const words = this.wallet_words();
+                let words = this.wallet_words();
                 if (!words)
-                    return null;
+                    return this.wallet_words($mol_ton_wallet.words_create());
                 return $mol_ton_wallet.words_to_pair(words);
             }
             awaiting_tools() {
