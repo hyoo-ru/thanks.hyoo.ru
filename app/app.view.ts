@@ -82,10 +82,6 @@ namespace $.$$ {
 			const ton = new $mol_ton
 			return ton.wallet( this.wallet_keys() )
 		}
-		
-		wallet() {
-			return this.person_balance() + ' TON'
-		}
 
 		wallet_address() {
 			return this.wallet().address().toString(true, true, true, this.wallet().ton().is_testnet())
