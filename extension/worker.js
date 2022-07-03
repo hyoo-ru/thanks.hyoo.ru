@@ -24,7 +24,7 @@ chrome.runtime.onConnect.addListener( content => {
 				})
 				
 				const app = await chrome.tabs.create({
-					url: msg.target,
+					url: msg.target + '/from=' + content.sender.tab.url,
 					active: false,
 				})
 				
