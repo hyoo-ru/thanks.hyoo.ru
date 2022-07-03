@@ -508,6 +508,16 @@ $mol_text_span $mol_paragraph
 
 $mol_icon_wallet $mol_icon path \M21,18V19C21,20.1 20.1,21 19,21H5C3.89,21 3,20.1 3,19V5C3,3.9 3.9,3 5,3H19C20.1,3 21,3.9 21,5V6H12C10.89,6 10,6.9 10,8V16C10,17.1 10.9,18 12,18M12,16H22V8H12M16,13.5C15.17,13.5 14.5,12.83 14.5,12C14.5,11.17 15.17,10.5 16,10.5C16.83,10.5 17.5,11.17 17.5,12C17.5,12.83 16.83,13.5 16,13.5Z
 
+$mol_labeler $mol_list
+	rows /
+		<= Label $mol_view
+			minimal_height 40
+			sub <= label /$mol_view_content
+				<= title
+		<= Content $mol_view
+			minimal_height 24
+			sub <= content /
+
 $mol_textarea $mol_stack
 	attr *
 		^
@@ -541,15 +551,28 @@ $mol_button_major $mol_button_typed
 		^
 		mol_theme \$mol_theme_accent
 
-$mol_labeler $mol_list
-	rows /
-		<= Label $mol_view
-			minimal_height 40
-			sub <= label /$mol_view_content
-				<= title
+$mol_check_list $mol_view
+	Option* $mol_check
+		checked?val <=> option_checked*?val false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
+		minimal_height 24
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value?val \
+
+$mol_deck $mol_list
+	items /$mol_view
+	rows /$mol_view
+		<= Switch $mol_switch
+			value?val <=> current?val \0
+			options <= switch_options *
 		<= Content $mol_view
-			minimal_height 24
-			sub <= content /
 
 $hyoo_thanks_app $mol_book2_catalog
 	target? \
@@ -611,14 +634,6 @@ $hyoo_thanks_app $mol_book2_catalog
 						<= Wallet_icon $mol_icon_wallet
 						<= wallet_balance \
 			body <= awaiting_body /
-				<= Import_block $mol_labeler
-					title <= import_label @ \Change wallet
-					content /
-						<= Import_words $mol_textarea
-							value? <=> import_words? \
-						<= Import_button $mol_button_major
-							title @ \Import TON wallet
-							click? <=> import_wallet? null
 				<= Subscription_block $mol_labeler
 					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
@@ -652,29 +667,36 @@ $hyoo_thanks_app $mol_book2_catalog
 						\Thanks to a browser plug-in, $hyoo_thanks keeps track of what Arnold liked, and at the end of the month automatically divides a fixed amount of 10 vanish coins proportionally between all the authors who made his life a little bit better this month.
 						\
 						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.
-		- wallet <= Wallet_page $mol_page
-			title @ \Wallet
-			tools /
-				<= Wallet_balance*1
+		wallet <= Wallet_page $mol_page
+			title <= wallet_balance
 			body /
-				<= Wallet_block $mol_labeler
-					label /
-						<= wallet_label @ \Wallet
-						<= Wallet_copy $mol_button_copy
-							text <= wallet_address
-					Content <= Wallet_address $mol_paragraph
-						title <= wallet_address \
-				<= Transfer_block $mol_labeler
-					title @ \Transfer
-					content /
-						<= 
-				<= Likes_link_block $mol_labeler
-					label /
-						<= Likes_link_label @ \Likes link
-						<= Likes_link_copy $mol_button_copy
-							text <= likes_link
-					Content <= Likes_link $mol_link
-						title <= likes_link \
-						arg *
-							to <= wallet_address
-							section \target
+				<= Deck $mol_deck
+					items /
+						<= Wallet_deck $mol_view
+							title @ \Wallet
+							sub /
+								<= Wallet_block $mol_labeler
+									label /
+										<= wallet_label @ \Address
+										<= Wallet_copy $mol_button_copy
+											text <= wallet_address
+									Content <= Wallet_address $mol_paragraph
+										title <= wallet_address \
+						<= Import_deck $mol_view
+							title @ \Import
+							sub /
+								<= Import_info $mol_paragraph
+									title <= import_info @ \Import wallet by entering the {num} secret words, separated by space
+								<= Import_words $mol_textarea
+									value? <=> import_words? \
+								<= Import_button $mol_button_major
+									title @ \Import
+									click? <=> import_wallet? null
+									enabled <= import_button_enabled false
+						<= Export_deck $mol_view
+							title @ \Export
+							sub /
+								<= Export_info $mol_paragraph
+									title @ \Copy the 24 secret words to a safe place:
+								<= Export_words $mol_paragraph
+									title <= export_words \

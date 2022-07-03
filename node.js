@@ -8220,6 +8220,54 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_labeler extends $mol_list {
+        rows() {
+            return [
+                this.Label(),
+                this.Content()
+            ];
+        }
+        label() {
+            return [
+                this.title()
+            ];
+        }
+        Label() {
+            const obj = new this.$.$mol_view();
+            obj.minimal_height = () => 40;
+            obj.sub = () => this.label();
+            return obj;
+        }
+        content() {
+            return [];
+        }
+        Content() {
+            const obj = new this.$.$mol_view();
+            obj.minimal_height = () => 24;
+            obj.sub = () => this.content();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_labeler.prototype, "Label", null);
+    __decorate([
+        $mol_mem
+    ], $mol_labeler.prototype, "Content", null);
+    $.$mol_labeler = $mol_labeler;
+})($ || ($ = {}));
+//mol/labeler/-view.tree/labeler.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2.5rem;\n\tcolor: var(--mol_theme_shade);\n\tz-index: 1;\n\tpadding: var(--mol_gap_text);\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
+})($ || ($ = {}));
+//mol/labeler/-css/labeler.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_textarea extends $mol_stack {
         attr() {
             return {
@@ -8406,50 +8454,208 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_labeler extends $mol_list {
+    class $mol_check_list extends $mol_view {
+        Option(id) {
+            const obj = new this.$.$mol_check();
+            obj.checked = (val) => this.option_checked(id, val);
+            obj.label = () => this.option_label(id);
+            obj.enabled = () => this.option_enabled(id);
+            obj.hint = () => this.option_hint(id);
+            obj.minimal_height = () => 24;
+            return obj;
+        }
+        options() {
+            return {};
+        }
+        keys() {
+            return [];
+        }
+        sub() {
+            return this.items();
+        }
+        option_checked(id, val) {
+            if (val !== undefined)
+                return val;
+            return false;
+        }
+        option_title(id) {
+            return "";
+        }
+        option_label(id) {
+            return [
+                this.option_title(id)
+            ];
+        }
+        enabled() {
+            return true;
+        }
+        option_enabled(id) {
+            return this.enabled();
+        }
+        option_hint(id) {
+            return "";
+        }
+        items() {
+            return [];
+        }
+    }
+    __decorate([
+        $mol_mem_key
+    ], $mol_check_list.prototype, "Option", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_check_list.prototype, "option_checked", null);
+    $.$mol_check_list = $mol_check_list;
+})($ || ($ = {}));
+//mol/check/list/-view.tree/list.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/list/list.view.css", "[mol_check_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_gap_round);\n\tgap: 1px;\n}\n\n[mol_check_list_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_check_list_option][mol_check_checked=\"true\"] {\n\ttext-shadow: 0 0;\n\tcolor: var(--mol_theme_current);\n}\n\n[mol_check_list_option][mol_check_checked=\"true\"][disabled] {\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+//mol/check/list/-css/list.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check_list extends $.$mol_check_list {
+            options() {
+                return {};
+            }
+            keys() {
+                return Object.keys(this.options());
+            }
+            items() {
+                return this.keys().map(key => this.Option(key));
+            }
+            option_title(key) {
+                return this.options()[key];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "keys", null);
+        __decorate([
+            $mol_mem
+        ], $mol_check_list.prototype, "items", null);
+        $$.$mol_check_list = $mol_check_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/check/list/list.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_switch extends $mol_check_list {
+        value(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_switch.prototype, "value", null);
+    $.$mol_switch = $mol_switch;
+})($ || ($ = {}));
+//mol/switch/-view.tree/switch.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_switch extends $.$mol_switch {
+            value(next) {
+                return $mol_state_session.value(`${this}.value()`, next) ?? '';
+            }
+            option_checked(key, next) {
+                if (next === undefined)
+                    return this.value() == key;
+                this.value(next ? key : '');
+                return next;
+            }
+        }
+        $$.$mol_switch = $mol_switch;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/switch/switch.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_deck extends $mol_list {
+        items() {
+            return [];
+        }
         rows() {
             return [
-                this.Label(),
+                this.Switch(),
                 this.Content()
             ];
         }
-        label() {
-            return [
-                this.title()
-            ];
+        current(val) {
+            if (val !== undefined)
+                return val;
+            return "0";
         }
-        Label() {
-            const obj = new this.$.$mol_view();
-            obj.minimal_height = () => 40;
-            obj.sub = () => this.label();
+        switch_options() {
+            return {};
+        }
+        Switch() {
+            const obj = new this.$.$mol_switch();
+            obj.value = (val) => this.current(val);
+            obj.options = () => this.switch_options();
             return obj;
-        }
-        content() {
-            return [];
         }
         Content() {
             const obj = new this.$.$mol_view();
-            obj.minimal_height = () => 24;
-            obj.sub = () => this.content();
             return obj;
         }
     }
     __decorate([
         $mol_mem
-    ], $mol_labeler.prototype, "Label", null);
+    ], $mol_deck.prototype, "current", null);
     __decorate([
         $mol_mem
-    ], $mol_labeler.prototype, "Content", null);
-    $.$mol_labeler = $mol_labeler;
+    ], $mol_deck.prototype, "Switch", null);
+    __decorate([
+        $mol_mem
+    ], $mol_deck.prototype, "Content", null);
+    $.$mol_deck = $mol_deck;
 })($ || ($ = {}));
-//mol/labeler/-view.tree/labeler.view.tree.ts
+//mol/deck/-view.tree/deck.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2.5rem;\n\tcolor: var(--mol_theme_shade);\n\tz-index: 1;\n\tpadding: var(--mol_gap_text);\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
+    var $$;
+    (function ($$) {
+        class $mol_deck extends $.$mol_deck {
+            current(next) {
+                return $mol_state_session.value(`${this}.current()`, next) || '0';
+            }
+            switch_options() {
+                let options = {};
+                this.items().forEach((item, index) => {
+                    options[String(index)] = item.title();
+                });
+                return options;
+            }
+            Content() {
+                return this.items()[this.current()];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_deck.prototype, "Content", null);
+        $$.$mol_deck = $mol_deck;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-//mol/labeler/-css/labeler.view.css.ts
+//mol/deck/deck.view.ts
 ;
 "use strict";
 var $;
@@ -8491,7 +8697,8 @@ var $;
             return {
                 "": this.Welcome(),
                 awaiting: this.Awaiting(),
-                story: this.Story()
+                story: this.Story(),
+                wallet: this.Wallet_page()
             };
         }
         Source() {
@@ -8566,39 +8773,6 @@ var $;
                 this.Wallet_balance()
             ];
         }
-        import_label() {
-            return this.$.$mol_locale.text('$hyoo_thanks_app_import_label');
-        }
-        import_words(next) {
-            if (next !== undefined)
-                return next;
-            return "";
-        }
-        Import_words() {
-            const obj = new this.$.$mol_textarea();
-            obj.value = (next) => this.import_words(next);
-            return obj;
-        }
-        import_wallet(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        Import_button() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Import_button_title');
-            obj.click = (next) => this.import_wallet(next);
-            return obj;
-        }
-        Import_block() {
-            const obj = new this.$.$mol_labeler();
-            obj.title = () => this.import_label();
-            obj.content = () => [
-                this.Import_words(),
-                this.Import_button()
-            ];
-            return obj;
-        }
         subscription(next) {
             if (next !== undefined)
                 return next;
@@ -8632,7 +8806,6 @@ var $;
         }
         awaiting_body() {
             return [
-                this.Import_block(),
                 this.Subscription_block(),
                 this.Awaiting_targets_block()
             ];
@@ -8657,6 +8830,121 @@ var $;
             obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Story_title');
             obj.body = () => [
                 this.Story_text()
+            ];
+            return obj;
+        }
+        wallet_label() {
+            return this.$.$mol_locale.text('$hyoo_thanks_app_wallet_label');
+        }
+        Wallet_copy() {
+            const obj = new this.$.$mol_button_copy();
+            obj.text = () => this.wallet_address();
+            return obj;
+        }
+        wallet_address() {
+            return "";
+        }
+        Wallet_address() {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.wallet_address();
+            return obj;
+        }
+        Wallet_block() {
+            const obj = new this.$.$mol_labeler();
+            obj.label = () => [
+                this.wallet_label(),
+                this.Wallet_copy()
+            ];
+            obj.Content = () => this.Wallet_address();
+            return obj;
+        }
+        Wallet_deck() {
+            const obj = new this.$.$mol_view();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Wallet_deck_title');
+            obj.sub = () => [
+                this.Wallet_block()
+            ];
+            return obj;
+        }
+        import_info() {
+            return this.$.$mol_locale.text('$hyoo_thanks_app_import_info');
+        }
+        Import_info() {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.import_info();
+            return obj;
+        }
+        import_words(next) {
+            if (next !== undefined)
+                return next;
+            return "";
+        }
+        Import_words() {
+            const obj = new this.$.$mol_textarea();
+            obj.value = (next) => this.import_words(next);
+            return obj;
+        }
+        import_wallet(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
+        import_button_enabled() {
+            return false;
+        }
+        Import_button() {
+            const obj = new this.$.$mol_button_major();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Import_button_title');
+            obj.click = (next) => this.import_wallet(next);
+            obj.enabled = () => this.import_button_enabled();
+            return obj;
+        }
+        Import_deck() {
+            const obj = new this.$.$mol_view();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Import_deck_title');
+            obj.sub = () => [
+                this.Import_info(),
+                this.Import_words(),
+                this.Import_button()
+            ];
+            return obj;
+        }
+        Export_info() {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Export_info_title');
+            return obj;
+        }
+        export_words() {
+            return "";
+        }
+        Export_words() {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.export_words();
+            return obj;
+        }
+        Export_deck() {
+            const obj = new this.$.$mol_view();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Export_deck_title');
+            obj.sub = () => [
+                this.Export_info(),
+                this.Export_words()
+            ];
+            return obj;
+        }
+        Deck() {
+            const obj = new this.$.$mol_deck();
+            obj.items = () => [
+                this.Wallet_deck(),
+                this.Import_deck(),
+                this.Export_deck()
+            ];
+            return obj;
+        }
+        Wallet_page() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => this.wallet_balance();
+            obj.body = () => [
+                this.Deck()
             ];
             return obj;
         }
@@ -8699,21 +8987,6 @@ var $;
     ], $hyoo_thanks_app.prototype, "Wallet_balance", null);
     __decorate([
         $mol_mem
-    ], $hyoo_thanks_app.prototype, "import_words", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "Import_words", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "import_wallet", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "Import_button", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "Import_block", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_thanks_app.prototype, "subscription", null);
     __decorate([
         $mol_mem
@@ -8736,6 +9009,51 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Story", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Wallet_copy", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Wallet_address", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Wallet_block", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Wallet_deck", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Import_info", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "import_words", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Import_words", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "import_wallet", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Import_button", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Import_deck", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Export_info", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Export_words", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Export_deck", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Deck", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Wallet_page", null);
     $.$hyoo_thanks_app = $hyoo_thanks_app;
 })($ || ($ = {}));
 //hyoo/thanks/app/-view.tree/app.view.tree.ts
@@ -9774,7 +10092,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_welcome_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_story_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_target_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_awaiting] {\n\tflex-basis: 21rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_awaiting_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_page_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_import_block_content] {\n\tflex-direction: column;\n}\n");
+    $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_welcome_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_story_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_target_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_awaiting] {\n\tflex-basis: 21rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_awaiting_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_deck],\n[hyoo_thanks_app_import_deck],\n[hyoo_thanks_app_export_deck] {\n\tpadding: var(--mol_gap_block);\n\tflex-direction: column;\n}\n\n[hyoo_thanks_app_wallet_page] {\n\tflex-basis: 21rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_wallet_block_label] {\n\tpadding-top: 0;\n\tpadding-bottom: 0;\n\talign-items: center;\n}\n\n[hyoo_thanks_app_export_words] {\n\tcolor: var(--mol_theme_special)\n}\n");
 })($ || ($ = {}));
 //hyoo/thanks/app/-css/app.view.css.ts
 ;
@@ -9831,12 +10149,21 @@ var $;
             wallet_words(next) {
                 return this.$.$mol_store_local.value('wallet', next);
             }
-            import_label() {
-                const count = this.import_words().split(/\s+/).filter(Boolean).length;
-                return super.import_label().replace('{num}', `${24 - count}`);
+            import_words_count() {
+                return this.import_words().split(/\s+/).filter(Boolean).length;
+            }
+            import_info() {
+                return super.import_info().replace('{num}', `${24 - this.import_words_count()}`);
+            }
+            import_button_enabled() {
+                return this.import_words_count() === 24;
             }
             import_wallet() {
                 this.wallet_words(this.import_words().split(/\s+/).filter(Boolean));
+                this.import_words('');
+            }
+            export_words() {
+                return this.wallet_words().join(' ');
             }
             wallet_keys() {
                 let words = this.wallet_words();

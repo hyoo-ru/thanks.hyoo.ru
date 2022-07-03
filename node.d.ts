@@ -2507,6 +2507,19 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_labeler extends $mol_list {
+        rows(): readonly any[];
+        label(): readonly $mol_view_content[];
+        Label(): $mol_view;
+        content(): readonly any[];
+        Content(): $mol_view;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_textarea extends $mol_stack {
         attr(): {
             mol_textarea_clickable: boolean;
@@ -2575,16 +2588,65 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_labeler extends $mol_list {
-        rows(): readonly any[];
-        label(): readonly $mol_view_content[];
-        Label(): $mol_view;
-        content(): readonly any[];
-        Content(): $mol_view;
+    class $mol_check_list extends $mol_view {
+        Option(id: any): $$.$mol_check;
+        options(): {};
+        keys(): readonly string[];
+        sub(): readonly $mol_check[];
+        option_checked(id: any, val?: any): boolean;
+        option_title(id: any): string;
+        option_label(id: any): readonly any[];
+        enabled(): boolean;
+        option_enabled(id: any): boolean;
+        option_hint(id: any): string;
+        items(): readonly $mol_check[];
     }
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_check_list extends $.$mol_check_list {
+        options(): {
+            [key: string]: string;
+        };
+        keys(): string[];
+        items(): $mol_check[];
+        option_title(key: string): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_switch extends $mol_check_list {
+        value(val?: any): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_switch extends $.$mol_switch {
+        value(next?: any): any;
+        option_checked(key: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_deck extends $mol_list {
+        items(): readonly $mol_view[];
+        rows(): readonly $mol_view[];
+        current(val?: any): string;
+        switch_options(): {};
+        Switch(): $$.$mol_switch;
+        Content(): $mol_view;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_deck extends $.$mol_deck {
+        current(next?: string): string;
+        switch_options(): Record<string, string>;
+        Content(): any;
+    }
 }
 
 declare namespace $ {
@@ -2599,6 +2661,7 @@ declare namespace $ {
             "": $mol_page;
             awaiting: $mol_page;
             story: $mol_page;
+            wallet: $mol_page;
         };
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -2614,12 +2677,6 @@ declare namespace $ {
         wallet_balance(): string;
         Wallet_balance(): $$.$mol_link;
         awaiting_tools(): readonly any[];
-        import_label(): string;
-        import_words(next?: any): string;
-        Import_words(): $$.$mol_textarea;
-        import_wallet(next?: any): any;
-        Import_button(): $mol_button_major;
-        Import_block(): $mol_labeler;
         subscription(next?: any): number;
         Subscription(): $$.$mol_number;
         Subscription_block(): $mol_labeler;
@@ -2631,6 +2688,26 @@ declare namespace $ {
         story_text(): string;
         Story_text(): $$.$mol_text;
         Story(): $mol_page;
+        wallet_label(): string;
+        Wallet_copy(): $$.$mol_button_copy;
+        wallet_address(): string;
+        Wallet_address(): $$.$mol_paragraph;
+        Wallet_block(): $mol_labeler;
+        Wallet_deck(): $mol_view;
+        import_info(): string;
+        Import_info(): $$.$mol_paragraph;
+        import_words(next?: any): string;
+        Import_words(): $$.$mol_textarea;
+        import_wallet(next?: any): any;
+        import_button_enabled(): boolean;
+        Import_button(): $mol_button_major;
+        Import_deck(): $mol_view;
+        Export_info(): $$.$mol_paragraph;
+        export_words(): string;
+        Export_words(): $$.$mol_paragraph;
+        Export_deck(): $mol_view;
+        Deck(): $$.$mol_deck;
+        Wallet_page(): $mol_page;
     }
 }
 
@@ -2902,8 +2979,11 @@ declare namespace $.$$ {
             TONs: string;
         }[];
         wallet_words(next?: string[]): any;
-        import_label(): string;
+        import_words_count(): number;
+        import_info(): string;
+        import_button_enabled(): boolean;
         import_wallet(): void;
+        export_words(): any;
         wallet_keys(): any;
         awaiting_tools(): $mol_link[];
         awaiting_body(): $mol_labeler[];
