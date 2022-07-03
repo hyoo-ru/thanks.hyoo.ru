@@ -81,6 +81,10 @@ namespace $.$$ {
 		person_balance() {
 			return this.user().wallet().balance()
 		}
+		
+		wallet() {
+			return this.person_balance() + ' TON'
+		}
 
 		person_link() {
 			return this.Person_link().uri()
