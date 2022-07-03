@@ -69,18 +69,38 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		wallet_words(next?: string[]) {
+			return this.$.$mol_store_local.value( 'wallet' , next )
+		}
+
+		import_label() {
+			const count = this.import_words().split(/\s+/).filter(Boolean).length
+			return super.import_label().replace('{num}', `${24 - count}`)
+		}
+
+		import_wallet() {
+			this.wallet_words( this.import_words().split(/\s+/).filter(Boolean) )
+		}
+
 		wallet_keys() {
-			let words = this.$.$mol_store_local.value( 'wallet' )
-			if (!words) {
-				words = this.$.$mol_store_local.value( 'wallet', $mol_ton_wallet.words_create() )
-			}
+			const words = this.wallet_words()
+			if (!words) return null
 			return $mol_ton_wallet.words_to_pair(words)
 		}
-		
+
+		awaiting_tools() {
+			return !this.wallet_words() ? [] : [this.Wallet_balance()]
+		}
+
+		awaiting_body() {
+			if (!this.wallet_words()) return [this.Import_block()]
+			return [this.Subscription_block(), this.Awaiting_targets_block()]
+		}
+
 		@ $mol_mem
 		wallet() {
 			const ton = new $mol_ton
-			return ton.wallet( this.wallet_keys() )
+			return ton.wallet( this.wallet_keys()! )
 		}
 
 		wallet_address() {
@@ -89,10 +109,6 @@ namespace $.$$ {
 
 		wallet_balance() {
 			return this.wallet().balance() + ' TON'
-		}
-
-		likes_link() {
-			return this.Likes_link().uri()
 		}
 		
 	}

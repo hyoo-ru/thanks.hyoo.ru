@@ -52,15 +52,22 @@ $hyoo_thanks_app $mol_book2_catalog
 							\Then as a user [recharge your personal fund](https://t.me/testgiver_ton_bot) and put [browser extension](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), and as an author, put [link]({my_link}) next to your content.
 		awaiting <= Awaiting $mol_page
 			title @ \Subscription
-			tools /
-				<= Wallet_balance*0 $mol_link
+			tools <= awaiting_tools /
+				<= Wallet_balance $mol_link
 					hint @ \Wallet
-					arg *
-						section \wallet
+					uri \https://t.me/testgiver_ton_bot
 					sub /
 						<= Wallet_icon $mol_icon_wallet
-						<= wallet_balance
-			body /
+						<= wallet_balance \
+			body <= awaiting_body /
+				<= Import_block $mol_labeler
+					title <= import_label @ \Enter {num} words
+					content /
+						<= Import_words $mol_textarea
+							value? <=> import_words? \
+						<= Import_button $mol_button_major
+							title @ \Import TON wallet
+							click? <=> import_wallet? null
 				<= Subscription_block $mol_labeler
 					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
@@ -93,7 +100,7 @@ $hyoo_thanks_app $mol_book2_catalog
 						\Thanks to a browser plug-in, $hyoo_thanks keeps track of what Arnold liked, and at the end of the month automatically divides a fixed amount of 10 vanish coins proportionally between all the authors who made his life a little bit better this month.
 						\
 						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.
-		wallet <= Wallet_page $mol_page
+		- wallet <= Wallet_page $mol_page
 			title @ \Wallet
 			tools /
 				<= Wallet_balance*1
@@ -105,6 +112,10 @@ $hyoo_thanks_app $mol_book2_catalog
 							text <= wallet_address
 					Content <= Wallet_address $mol_paragraph
 						title <= wallet_address \
+				<= Transfer_block $mol_labeler
+					title @ \Transfer
+					content /
+						<= 
 				<= Likes_link_block $mol_labeler
 					label /
 						<= Likes_link_label @ \Likes link
