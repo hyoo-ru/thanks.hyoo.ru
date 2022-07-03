@@ -8446,6 +8446,73 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_form_field extends $mol_labeler {
+        bids() {
+            return [];
+        }
+        label() {
+            return [
+                this.name(),
+                this.Bid()
+            ];
+        }
+        content() {
+            return [
+                this.control()
+            ];
+        }
+        name() {
+            return "";
+        }
+        bid() {
+            return "";
+        }
+        Bid() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.bid()
+            ];
+            return obj;
+        }
+        control() {
+            return null;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form_field.prototype, "Bid", null);
+    $.$mol_form_field = $mol_form_field;
+})($ || ($ = {}));
+//mol/form/field/-view.tree/field.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+//mol/form/field/-css/field.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form_field extends $.$mol_form_field {
+            bid() {
+                return this.bids().filter(Boolean)[0] ?? '';
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_form_field.prototype, "bid", null);
+        $$.$mol_form_field = $mol_form_field;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/field/field.view.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_check_list extends $mol_view {
         Option(id) {
             const obj = new this.$.$mol_check();
@@ -8648,6 +8715,129 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //mol/deck/deck.view.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_row extends $mol_view {
+    }
+    $.$mol_row = $mol_row;
+})($ || ($ = {}));
+//mol/row/-view.tree/row.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: .375rem;\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmargin: .375rem;\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+//mol/row/-css/row.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_form extends $mol_list {
+        submit_blocked() {
+            return false;
+        }
+        event() {
+            return {
+                ...super.event(),
+                keydown: (event) => this.keydown(event)
+            };
+        }
+        submit(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        rows() {
+            return [
+                this.Body(),
+                this.Foot()
+            ];
+        }
+        keydown(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        form_fields() {
+            return [];
+        }
+        body() {
+            return this.form_fields();
+        }
+        Body() {
+            const obj = new this.$.$mol_list();
+            obj.sub = () => this.body();
+            return obj;
+        }
+        buttons() {
+            return [];
+        }
+        foot() {
+            return this.buttons();
+        }
+        Foot() {
+            const obj = new this.$.$mol_row();
+            obj.sub = () => this.foot();
+            return obj;
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "submit", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "keydown", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "Body", null);
+    __decorate([
+        $mol_mem
+    ], $mol_form.prototype, "Foot", null);
+    $.$mol_form = $mol_form;
+})($ || ($ = {}));
+//mol/form/-view.tree/form.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/form/form.css", "[mol_form_foot] {\n\tmargin: var(--mol_gap_block);\n}\n");
+})($ || ($ = {}));
+//mol/form/-css/form.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form extends $.$mol_form {
+            form_fields() {
+                return [...this.view_find(view => view instanceof $mol_form_field)]
+                    .map(path => path[path.length - 1]);
+            }
+            submit_allowed() {
+                return this.form_fields().every(field => !field.bid());
+            }
+            submit_blocked() {
+                return !this.submit_allowed();
+            }
+            keydown(next) {
+                if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
+                    this.submit(event);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "form_fields", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "submit_allowed", null);
+        $$.$mol_form = $mol_form;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/form.view.ts
 ;
 "use strict";
 var $;
@@ -8860,11 +9050,6 @@ var $;
         import_info() {
             return this.$.$mol_locale.text('$hyoo_thanks_app_import_info');
         }
-        Import_info() {
-            const obj = new this.$.$mol_paragraph();
-            obj.title = () => this.import_info();
-            return obj;
-        }
         import_words(next) {
             if (next !== undefined)
                 return next;
@@ -8891,18 +9076,13 @@ var $;
             return obj;
         }
         Import_deck() {
-            const obj = new this.$.$mol_view();
+            const obj = new this.$.$mol_form_field();
             obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Import_deck_title');
-            obj.sub = () => [
-                this.Import_info(),
+            obj.bid = () => this.import_info();
+            obj.content = () => [
                 this.Import_words(),
                 this.Import_button()
             ];
-            return obj;
-        }
-        Export_info() {
-            const obj = new this.$.$mol_paragraph();
-            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Export_info_title');
             return obj;
         }
         export_words() {
@@ -8914,12 +9094,10 @@ var $;
             return obj;
         }
         Export_deck() {
-            const obj = new this.$.$mol_view();
+            const obj = new this.$.$mol_form_field();
             obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Export_deck_title');
-            obj.sub = () => [
-                this.Export_info(),
-                this.Export_words()
-            ];
+            obj.bid = () => this.$.$mol_locale.text('$hyoo_thanks_app_Export_deck_bid');
+            obj.Content = () => this.Export_words();
             return obj;
         }
         Deck() {
@@ -9014,9 +9192,6 @@ var $;
     ], $hyoo_thanks_app.prototype, "Wallet_deck", null);
     __decorate([
         $mol_mem
-    ], $hyoo_thanks_app.prototype, "Import_info", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_thanks_app.prototype, "import_words", null);
     __decorate([
         $mol_mem
@@ -9030,9 +9205,6 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Import_deck", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "Export_info", null);
     __decorate([
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Export_words", null);
@@ -9958,7 +10130,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_welcome_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_story_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_target_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_awaiting] {\n\tflex-basis: 21rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_awaiting_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_deck],\n[hyoo_thanks_app_import_deck],\n[hyoo_thanks_app_export_deck] {\n\tpadding: var(--mol_gap_block);\n\tflex-direction: column;\n}\n\n[hyoo_thanks_app_wallet_page] {\n\tflex-basis: 21rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_wallet_block_label] {\n\tpadding-top: 0;\n\tpadding-bottom: 0;\n\talign-items: center;\n}\n\n[hyoo_thanks_app_export_words] {\n\tcolor: var(--mol_theme_special)\n}\n");
+    $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_welcome_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_story_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_target_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_awaiting] {\n\tflex-basis: 21rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_awaiting_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_deck],\n[hyoo_thanks_app_import_deck],\n[hyoo_thanks_app_export_deck] {\n\tpadding: var(--mol_gap_block);\n\tflex-direction: column;\n}\n\n[hyoo_thanks_app_wallet_page] {\n\tflex-basis: 30rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_wallet_block_label] {\n\tpadding-top: 0;\n\tpadding-bottom: 0;\n\talign-items: center;\n}\n\n[hyoo_thanks_app_export_words] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_thanks_app_deck_switch] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_address] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_thanks_app_import_words] {\n\tflex-shrink: 1;\n}\n");
 })($ || ($ = {}));
 //hyoo/thanks/app/-css/app.view.css.ts
 ;

@@ -2542,6 +2542,27 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_form_field extends $mol_labeler {
+        bids(): readonly string[];
+        label(): readonly any[];
+        content(): readonly any[];
+        name(): string;
+        bid(): string;
+        Bid(): $mol_view;
+        control(): any;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form_field extends $.$mol_form_field {
+        bid(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_check_list extends $mol_view {
         Option(id: any): $$.$mol_check;
         options(): {};
@@ -2604,6 +2625,44 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_row extends $mol_view {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_form extends $mol_list {
+        submit_blocked(): boolean;
+        event(): {
+            keydown: (event?: any) => any;
+        };
+        submit(event?: any): any;
+        rows(): readonly any[];
+        keydown(event?: any): any;
+        form_fields(): readonly $mol_form_field[];
+        body(): readonly $mol_form_field[];
+        Body(): $$.$mol_list;
+        buttons(): readonly $mol_view[];
+        foot(): readonly $mol_view[];
+        Foot(): $mol_row;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form extends $.$mol_form {
+        form_fields(): readonly $mol_form_field[];
+        submit_allowed(): boolean;
+        submit_blocked(): boolean;
+        keydown(next: KeyboardEvent): void;
+    }
+}
+
+declare namespace $ {
     class $hyoo_thanks_app extends $mol_book2_catalog {
         target(next?: any): string;
         menu_title(): string;
@@ -2649,17 +2708,15 @@ declare namespace $ {
         Wallet_block(): $mol_labeler;
         Wallet_deck(): $mol_view;
         import_info(): string;
-        Import_info(): $$.$mol_paragraph;
         import_words(next?: any): string;
         Import_words(): $$.$mol_textarea;
         import_wallet(next?: any): any;
         import_button_enabled(): boolean;
         Import_button(): $mol_button_major;
-        Import_deck(): $mol_view;
-        Export_info(): $$.$mol_paragraph;
+        Import_deck(): $$.$mol_form_field;
         export_words(): string;
         Export_words(): $$.$mol_paragraph;
-        Export_deck(): $mol_view;
+        Export_deck(): $$.$mol_form_field;
         Deck(): $$.$mol_deck;
         Wallet_page(): $mol_page;
     }
