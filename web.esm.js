@@ -8295,23 +8295,11 @@ var $;
             obj.Content = () => this.Awaiting_targets();
             return obj;
         }
-        pay(next) {
-            if (next !== undefined)
-                return next;
-            return null;
-        }
-        Send() {
-            const obj = new this.$.$mol_button_major();
-            obj.title = () => "Send";
-            obj.click = (next) => this.pay(next);
-            return obj;
-        }
         awaiting_body() {
             return [
                 this.Import_block(),
                 this.Subscription_block(),
-                this.Awaiting_targets_block(),
-                this.Send()
+                this.Awaiting_targets_block()
             ];
         }
         Awaiting() {
@@ -8404,12 +8392,6 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Awaiting_targets_block", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "pay", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "Send", null);
     __decorate([
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Awaiting", null);
@@ -9388,8 +9370,11 @@ var $;
         address() {
             return $mol_wire_sync(this.obj()).getAddress();
         }
-        info() {
+        info(force) {
             return $mol_wire_sync(this.ton().provider()).getWalletInfo(this.address().toString(true, true, true, this.ton().is_testnet()));
+        }
+        seqno() {
+            return $mol_wire_sync(this.obj().methods.seqno()).call();
         }
         initialized() {
             return this.info().account_state === 'active';
@@ -9397,11 +9382,8 @@ var $;
         balance() {
             return $mol_ton.fromNano(String(this.info().balance));
         }
-        transfer(address, amount, payload) {
+        transfer(address, amount, payload, seqno) {
             const wallet = this.ton().wallet(address);
-            let seqno = this.info().seqno;
-            if (!seqno)
-                seqno = 0;
             if (wallet.initialized() === false) {
                 address = wallet.address().toString(true, true, false, this.ton().is_testnet());
             }
@@ -9414,8 +9396,8 @@ var $;
                 sendMode: 3,
             });
         }
-        send(address, amount, payload) {
-            const query = this.transfer(address, amount, payload);
+        send(address, amount, payload, seqno) {
+            const query = this.transfer(address, amount, payload, seqno);
             const response = $mol_wire_sync(query).send();
             if (response["@type"] === "ok") {
                 return true;
@@ -9439,6 +9421,9 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_ton_wallet.prototype, "info", null);
+    __decorate([
+        $mol_action
+    ], $mol_ton_wallet.prototype, "seqno", null);
     __decorate([
         $mol_action
     ], $mol_ton_wallet.prototype, "transfer", null);
@@ -9544,7 +9529,7 @@ var $;
             wallet_balance() {
                 return this.wallet().balance() + ' TON';
             }
-            enqueue_transfer_list() {
+            transfer_enqueue_list() {
                 if (!this.wallet_words())
                     return;
                 const likes = this.likes();
@@ -9554,14 +9539,59 @@ var $;
                 for (const [address, count] of Object.entries(likes).reverse()) {
                     if (count <= 0)
                         continue;
-                    this.enqueue_transfer(address, count / total * this.subscription());
+                    this.transfer_enqueue(address, count / total * this.subscription());
                 }
             }
-            enqueue_transfer(address, val) {
-                console.log(address, val);
-                this.wallet().send(address, val.toFixed(5), `thanks.hyoo.ru`);
+            transfer_queue(next) {
+                return this.$.$mol_state_local.value('queue', next) ?? [];
             }
-            queue(next) {
+            transfer_enqueue(address, val) {
+                const obj = { address, amount: val.toFixed(5) };
+                this.transfer_queue([...this.transfer_queue(), obj]);
+            }
+            transfer_next_moment(next) {
+                let str = this.$.$mol_state_local.value('transfer_next_moment', next && next.toString());
+                if (!str) {
+                    const next = new $mol_time_moment().merge({ day: 0 }).shift({ month: 1, day: -1 });
+                    str = this.$.$mol_state_local.value('transfer_next_moment', next.toString());
+                }
+                return new $mol_time_moment(str);
+            }
+            transfer() {
+                if (!this.transfer_queue().length)
+                    return;
+                const [lead, ...queue] = this.transfer_queue();
+                const seqno = this.wallet().info(lead.address).seqno;
+                if (!lead.seqno) {
+                    lead.seqno = seqno;
+                    this.transfer_queue([lead, ...queue]);
+                }
+                if (lead.seqno && seqno > lead.seqno) {
+                    this.transfer_queue(queue);
+                    return;
+                }
+                const ok = this.wallet().send(lead.address, lead.amount, 'thanks.hyoo.ru', seqno);
+                if (!ok)
+                    return;
+                this.transfer_queue(queue);
+            }
+            transfer_start() {
+                if (Date.now() > this.transfer_next_moment().valueOf()) {
+                    this.transfer_enqueue_list();
+                    this.transfer_next_moment(new $mol_time_moment().merge({ day: 0 }).shift({ month: 1, day: -1 }));
+                }
+                try {
+                    this.transfer();
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        this.$.$mol_fail_hidden(error);
+                    console.error(error);
+                }
+                this.$.$mol_state_time.now(13000);
+            }
+            auto() {
+                this.transfer_start();
             }
         }
         __decorate([
@@ -9599,10 +9629,22 @@ var $;
         ], $hyoo_thanks_app.prototype, "wallet", null);
         __decorate([
             $mol_action
-        ], $hyoo_thanks_app.prototype, "enqueue_transfer_list", null);
+        ], $hyoo_thanks_app.prototype, "transfer_enqueue_list", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "transfer_queue", null);
         __decorate([
             $mol_action
-        ], $hyoo_thanks_app.prototype, "enqueue_transfer", null);
+        ], $hyoo_thanks_app.prototype, "transfer_enqueue", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "transfer_next_moment", null);
+        __decorate([
+            $mol_action
+        ], $hyoo_thanks_app.prototype, "transfer", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_thanks_app.prototype, "transfer_start", null);
         $$.$hyoo_thanks_app = $hyoo_thanks_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

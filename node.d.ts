@@ -2626,8 +2626,6 @@ declare namespace $ {
         shares(): readonly any[];
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
-        pay(next?: any): any;
-        Send(): $mol_button_major;
         awaiting_body(): readonly any[];
         Awaiting(): $mol_page;
         story_text(): string;
@@ -2873,11 +2871,12 @@ declare namespace $ {
         };
         obj(): ReturnType<typeof $mol_ton_wallet.Wallet>;
         address(): any;
-        info(): any;
+        info(force?: any): any;
+        seqno(): any;
         initialized(): boolean;
         balance(): string;
-        transfer(address: string, amount: string, payload: string): any;
-        send(address: string, amount: string, payload: string): boolean;
+        transfer(address: string, amount: string, payload: string, seqno: number): any;
+        send(address: string, amount: string, payload: string, seqno: number): boolean;
         transactions(count?: number): $mol_ton_transaction[];
     }
 }
@@ -2911,13 +2910,21 @@ declare namespace $.$$ {
         wallet(): $mol_ton_wallet;
         wallet_address(): any;
         wallet_balance(): string;
-        enqueue_transfer_list(): void;
-        enqueue_transfer(address: string, val: number): void;
-        queue(next?: {
+        transfer_enqueue_list(): void;
+        transfer_queue(next?: {
             address: string;
             amount: string;
             seqno?: number;
-        }[]): void;
+        }[]): {
+            address: string;
+            amount: string;
+            seqno?: number | undefined;
+        }[];
+        transfer_enqueue(address: string, val: number): void;
+        transfer_next_moment(next?: $mol_time_moment): $mol_time_moment;
+        transfer(): void;
+        transfer_start(): void;
+        auto(): void;
     }
 }
 
