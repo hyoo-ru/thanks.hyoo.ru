@@ -19,10 +19,24 @@
 	padding: var(--mol_gap_block);
 }
 
-[hyoo_thanks_app_wallet_page_body] > * {
+[hyoo_thanks_app_wallet_deck],
+[hyoo_thanks_app_import_deck],
+[hyoo_thanks_app_export_deck] {
 	padding: var(--mol_gap_block);
+	flex-direction: column;
 }
 
-[hyoo_thanks_app_import_block_content] {
-	flex-direction: column;
+[hyoo_thanks_app_wallet_page] {
+	flex-basis: 21rem;
+	flex-shrink: 0;
+}
+
+[hyoo_thanks_app_wallet_block_label] {
+	padding-top: 0;
+	padding-bottom: 0;
+	align-items: center;
+}
+
+[hyoo_thanks_app_export_words] {
+	color: var(--mol_theme_special)
 }

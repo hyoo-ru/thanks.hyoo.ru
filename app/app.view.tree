@@ -58,14 +58,6 @@ $hyoo_thanks_app $mol_book2_catalog
 						<= Wallet_icon $mol_icon_wallet
 						<= wallet_balance \
 			body <= awaiting_body /
-				<= Import_block $mol_labeler
-					title <= import_label @ \Change wallet
-					content /
-						<= Import_words $mol_textarea
-							value? <=> import_words? \
-						<= Import_button $mol_button_major
-							title @ \Import TON wallet
-							click? <=> import_wallet? null
 				<= Subscription_block $mol_labeler
 					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
@@ -99,29 +91,36 @@ $hyoo_thanks_app $mol_book2_catalog
 						\Thanks to a browser plug-in, $hyoo_thanks keeps track of what Arnold liked, and at the end of the month automatically divides a fixed amount of 10 vanish coins proportionally between all the authors who made his life a little bit better this month.
 						\
 						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.
-		- wallet <= Wallet_page $mol_page
-			title @ \Wallet
-			tools /
-				<= Wallet_balance*1
+		wallet <= Wallet_page $mol_page
+			title <= wallet_balance
 			body /
-				<= Wallet_block $mol_labeler
-					label /
-						<= wallet_label @ \Wallet
-						<= Wallet_copy $mol_button_copy
-							text <= wallet_address
-					Content <= Wallet_address $mol_paragraph
-						title <= wallet_address \
-				<= Transfer_block $mol_labeler
-					title @ \Transfer
-					content /
-						<= 
-				<= Likes_link_block $mol_labeler
-					label /
-						<= Likes_link_label @ \Likes link
-						<= Likes_link_copy $mol_button_copy
-							text <= likes_link
-					Content <= Likes_link $mol_link
-						title <= likes_link \
-						arg *
-							to <= wallet_address
-							section \target
+				<= Deck $mol_deck
+					items /
+						<= Wallet_deck $mol_view
+							title @ \Wallet
+							sub /
+								<= Wallet_block $mol_labeler
+									label /
+										<= wallet_label @ \Address
+										<= Wallet_copy $mol_button_copy
+											text <= wallet_address
+									Content <= Wallet_address $mol_paragraph
+										title <= wallet_address \
+						<= Import_deck $mol_view
+							title @ \Import
+							sub /
+								<= Import_info $mol_paragraph
+									title <= import_info @ \Import wallet by entering the {num} secret words, separated by space
+								<= Import_words $mol_textarea
+									value? <=> import_words? \
+								<= Import_button $mol_button_major
+									title @ \Import
+									click? <=> import_wallet? null
+									enabled <= import_button_enabled false
+						<= Export_deck $mol_view
+							title @ \Export
+							sub /
+								<= Export_info $mol_paragraph
+									title @ \Copy the 24 secret words to a safe place:
+								<= Export_words $mol_paragraph
+									title <= export_words \

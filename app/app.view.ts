@@ -75,13 +75,25 @@ namespace $.$$ {
 			return this.$.$mol_store_local.value( 'wallet' , next )
 		}
 
-		import_label() {
-			const count = this.import_words().split(/\s+/).filter(Boolean).length
-			return super.import_label().replace('{num}', `${24 - count}`)
+		import_words_count() {
+			return this.import_words().split(/\s+/).filter(Boolean).length
+		}
+
+		import_info() {
+			return super.import_info().replace('{num}', `${24 - this.import_words_count()}`)
+		}
+
+		import_button_enabled() {
+			return this.import_words_count() === 24
 		}
 
 		import_wallet() {
 			this.wallet_words( this.import_words().split(/\s+/).filter(Boolean) )
+			this.import_words('')
+		}
+
+		export_words() {
+			return this.wallet_words().join(' ')
 		}
 
 		wallet_keys() {
