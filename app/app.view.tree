@@ -1,6 +1,7 @@
 $hyoo_thanks_app $mol_book2_catalog
 	domain $hyoo_thanks_app_domain
 		user => user
+		person* => person*
 	target? \
 	menu_title \$hyoo_thanks
 	menu_tools /
@@ -16,6 +17,8 @@ $hyoo_thanks_app $mol_book2_catalog
 		body /
 			<= Target_likes $mol_number
 				value? <=> target_likes? 0
+				event_inc? <=> target_likes_inc? null
+				event_dec? <=> target_likes_dec? null
 			<= target_hint $mol_link
 				arg * section null
 				title @ \What is it?
@@ -99,6 +102,16 @@ $hyoo_thanks_app $mol_book2_catalog
 					title @ \Name
 					Content <= Person_name $mol_string
 						value? <=> person_name? \
+				<= Person_link_block $mol_labeler
+					label /
+						<= person_link_label @ \Thanks link
+						<= Person_link_copy $mol_button_copy
+							text <= person_link
+					Content <= Person_link $mol_link
+						title <= person_link \
+						arg *
+							to <= person_id \
+							section \target
 				<= Person_wallet_block $mol_labeler
 					label /
 						<= wallet_label @ \Wallet address
@@ -110,13 +123,3 @@ $hyoo_thanks_app $mol_book2_catalog
 					title @ \Wallet balance
 					Content <= Person_balance $mol_paragraph
 						title <= person_balance \
-				<= Person_link_block $mol_labeler
-					label /
-						<= person_link_label @ \Thanks link
-						<= Person_link_copy $mol_button_copy
-							text <= person_link
-					Content <= Person_link $mol_link
-						title <= person_link \
-						arg *
-							to <= person_wallet
-							section \target

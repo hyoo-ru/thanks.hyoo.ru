@@ -34,5 +34,30 @@ namespace $ {
 			return ton.wallet( this.wallet_keys() )
 		}
 
+		like_persons(next?: $hyoo_thanks_app_person[]) {
+			return this.state().sub('like_persons').list( next?.map( obj => obj.id() ) ).map( id => this.domain().person( String(id) ) )
+		}
+
+		@ $mol_mem_key
+		like_count(person: $hyoo_thanks_app_person, count?: number) {
+			return Number( this.state().sub('like_count').sub(person.id()).value(count) ) 
+		}
+
+		@ $mol_action
+		like_change( person: $hyoo_thanks_app_person, count: number ) {
+			let next = this.like_count(person) + count
+
+			if (next <= 0) {
+				next = 0
+				this.like_persons( this.like_persons().filter( obj => obj !== person ) )
+			}
+
+			if (next > 0 && !this.like_persons().includes(person)) {
+				this.like_persons( [...this.like_persons(), person] )
+			}
+
+			this.like_count( person , next )
+		}
+
 	}
 }
