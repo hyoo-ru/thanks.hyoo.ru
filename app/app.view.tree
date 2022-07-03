@@ -75,9 +75,6 @@ $hyoo_thanks_app $mol_book2_catalog
 					title @ \This Month Shares
 					Content <= Awaiting_targets $mol_grid
 						records <= shares /
-				<= Send $mol_button_major
-					title \Send
-					click? <=> pay? null
 		story <= Story $mol_page
 			title @ \Arnold's Story
 			body /

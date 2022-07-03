@@ -95,7 +95,6 @@ namespace $.$$ {
 		}
 
 		awaiting_body() {
-			// if (!this.wallet_words()) return [this.Import_block()]
 			return [this.Subscription_block(), this.Awaiting_targets_block()]
 		}
 
@@ -114,7 +113,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_action
-		enqueue_transfer_list() {
+		transfer_enqueue_list() {
 			if (!this.wallet_words()) return
 
 			const likes = this.likes()
@@ -123,20 +122,73 @@ namespace $.$$ {
 
 			for (const [address, count] of Object.entries(likes).reverse()) {
 				if (count <= 0) continue
-				this.enqueue_transfer( address, count / total * this.subscription() )
+				this.transfer_enqueue( address, count / total * this.subscription() )
 			}
 		}
 
+		@ $mol_mem
+		transfer_queue(next?: { address: string, amount: string, seqno?: number }[]) {
+			return this.$.$mol_state_local.value( 'queue' , next ) ?? []
+		}
+
 		@ $mol_action
-		enqueue_transfer(address: string, val: number) {
-			console.log(address, val)
-			this.wallet().send(address, val.toFixed(5), `thanks.hyoo.ru`)
+		transfer_enqueue(address: string, val: number) {
+			const obj = { address, amount: val.toFixed(5) }
+			this.transfer_queue( [...this.transfer_queue(), obj] )
 		}
 
-		queue(next?: { address: string, amount: string, seqno?: number }[]) {
-			// return this.$.$mol_store_local.value()
+		@ $mol_mem
+		transfer_next_moment(next?: $mol_time_moment) {
+			let str = this.$.$mol_state_local.value('transfer_next_moment', next && next.toString())
+			if (!str) {
+				const next = new $mol_time_moment().merge({ day: 0 }).shift({ month: 1, day: -1 })
+				str = this.$.$mol_state_local.value('transfer_next_moment', next.toString())!
+			}
+			return new $mol_time_moment(str)
 		}
 
+		@ $mol_action
+		transfer() {
+			if (!this.transfer_queue().length) return
+
+			const [lead, ...queue] = this.transfer_queue()
+
+			const seqno = this.wallet().info(lead.address).seqno
+			if (!lead.seqno) {
+				lead.seqno = seqno
+				this.transfer_queue([lead, ...queue])
+			}
+
+			if (lead.seqno && seqno > lead.seqno) {
+				this.transfer_queue(queue)
+				return // transfered
+			}
+
+			const ok = this.wallet().send(lead.address, lead.amount, 'thanks.hyoo.ru', seqno)
+			if (!ok) return
+
+			this.transfer_queue(queue)
+		}
+
+		@ $mol_mem
+		transfer_start() {
+			if (Date.now() > this.transfer_next_moment().valueOf()) {
+				this.transfer_enqueue_list()
+				this.transfer_next_moment( new $mol_time_moment().merge({ day: 0 }).shift({ month: 1, day: -1 }) )
+			}
+
+			try {
+				this.transfer()
+			} catch(error) {
+				if (error instanceof Promise) this.$.$mol_fail_hidden(error)
+				console.error(error)
+			}
+			this.$.$mol_state_time.now(13000)
+		}
+
+		auto() {
+			this.transfer_start()
+		}
 	}
 	
 }
