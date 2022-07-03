@@ -8576,8 +8576,8 @@ var $;
             return {
                 "": this.Welcome(),
                 awaiting: this.Awaiting(),
-                story: this.Story(),
-                wallet: this.Wallet_page()
+                wallet: this.Wallet_page(),
+                story: this.Story()
             };
         }
         Source() {
@@ -8689,22 +8689,6 @@ var $;
             ];
             return obj;
         }
-        story_text() {
-            return this.$.$mol_locale.text('$hyoo_thanks_app_story_text');
-        }
-        Story_text() {
-            const obj = new this.$.$mol_text();
-            obj.text = () => this.story_text();
-            return obj;
-        }
-        Story() {
-            const obj = new this.$.$mol_page();
-            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Story_title');
-            obj.body = () => [
-                this.Story_text()
-            ];
-            return obj;
-        }
         wallet_label() {
             return this.$.$mol_locale.text('$hyoo_thanks_app_wallet_label');
         }
@@ -8811,6 +8795,22 @@ var $;
             ];
             return obj;
         }
+        story_text() {
+            return this.$.$mol_locale.text('$hyoo_thanks_app_story_text');
+        }
+        Story_text() {
+            const obj = new this.$.$mol_text();
+            obj.text = () => this.story_text();
+            return obj;
+        }
+        Story() {
+            const obj = new this.$.$mol_page();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Story_title');
+            obj.body = () => [
+                this.Story_text()
+            ];
+            return obj;
+        }
     }
     __decorate([
         $mol_mem
@@ -8868,12 +8868,6 @@ var $;
     ], $hyoo_thanks_app.prototype, "Awaiting", null);
     __decorate([
         $mol_mem
-    ], $hyoo_thanks_app.prototype, "Story_text", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_thanks_app.prototype, "Story", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_thanks_app.prototype, "Wallet_copy", null);
     __decorate([
         $mol_mem
@@ -8911,6 +8905,12 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Wallet_page", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Story_text", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_thanks_app.prototype, "Story", null);
     $.$hyoo_thanks_app = $hyoo_thanks_app;
     class $hyoo_thnaks_app_likes extends $mol_number {
         dec_icon() {

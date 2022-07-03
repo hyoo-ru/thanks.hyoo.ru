@@ -2731,8 +2731,8 @@ declare namespace $ {
         spreads(): {
             "": $mol_page;
             awaiting: $mol_page;
-            story: $mol_page;
             wallet: $mol_page;
+            story: $mol_page;
         };
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
@@ -2754,9 +2754,6 @@ declare namespace $ {
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
         Awaiting(): $mol_page;
-        story_text(): string;
-        Story_text(): $$.$mol_text;
-        Story(): $mol_page;
         wallet_label(): string;
         Wallet_copy(): $$.$mol_button_copy;
         wallet_address(): string;
@@ -2775,6 +2772,9 @@ declare namespace $ {
         Export_deck(): $$.$mol_form_field;
         Deck(): $$.$mol_deck;
         Wallet_page(): $mol_page;
+        story_text(): string;
+        Story_text(): $$.$mol_text;
+        Story(): $mol_page;
     }
     class $hyoo_thnaks_app_likes extends $mol_number {
         dec_icon(): $mol_icon_thumb_down;
