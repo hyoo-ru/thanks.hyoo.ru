@@ -9079,131 +9079,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_store extends $mol_object2 {
-        data_default;
-        constructor(data_default) {
-            super();
-            this.data_default = data_default;
-        }
-        data(next) {
-            return next === undefined ? this.data_default : next;
-        }
-        snapshot(next) {
-            return JSON.stringify(this.data(next === undefined ? next : JSON.parse(next)));
-        }
-        value(key, next) {
-            const data = this.data();
-            if (next === undefined)
-                return data && data[key];
-            const Constr = Reflect.getPrototypeOf(data).constructor;
-            this.data(Object.assign(new Constr, data, { [key]: next }));
-            return next;
-        }
-        selection(key, next = [0, 0]) {
-            return next;
-        }
-        sub(key, lens) {
-            if (!lens)
-                lens = new $mol_store();
-            const data = lens.data;
-            lens.data = next => {
-                if (next == undefined) {
-                    return this.value(key) ?? lens.data_default;
-                }
-                return this.value(key, next);
-            };
-            return lens;
-        }
-        reset() {
-            this.data(this.data_default);
-        }
-        active() {
-            return true;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_store.prototype, "data", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_store.prototype, "selection", null);
-    $.$mol_store = $mol_store;
-})($ || ($ = {}));
-//mol/store/store.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_mem_force extends Object {
-        constructor() { super(); }
-        $mol_mem_force = true;
-        static $mol_mem_force = true;
-        static toString() { return this.name; }
-    }
-    $.$mol_mem_force = $mol_mem_force;
-    class $mol_mem_force_cache extends $mol_mem_force {
-    }
-    $.$mol_mem_force_cache = $mol_mem_force_cache;
-    class $mol_mem_force_update extends $mol_mem_force {
-    }
-    $.$mol_mem_force_update = $mol_mem_force_update;
-    class $mol_mem_force_fail extends $mol_mem_force_cache {
-    }
-    $.$mol_mem_force_fail = $mol_mem_force_fail;
-})($ || ($ = {}));
-//mol/mem/force/force.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_store_local_class extends $mol_store {
-        native() {
-            check: try {
-                const native = $mol_dom_context.localStorage;
-                if (!native)
-                    break check;
-                native.setItem('', '');
-                native.removeItem('');
-                return native;
-            }
-            catch (error) {
-                console.warn(error);
-            }
-            const dict = new Map();
-            return {
-                map: dict,
-                getItem: (key) => dict.get(key),
-                setItem: (key, value) => dict.set(key, value),
-                removeItem: (key) => dict.delete(key),
-            };
-        }
-        data() {
-            return $mol_fail(new Error('Forbidden for local storage'));
-        }
-        value(key, next, force) {
-            if (next === undefined)
-                return JSON.parse(this.native().getItem(key) || 'null');
-            if (next === null)
-                this.native().removeItem(key);
-            else
-                this.native().setItem(key, JSON.stringify(next));
-            return next;
-        }
-    }
-    __decorate([
-        $mol_mem
-    ], $mol_store_local_class.prototype, "native", null);
-    __decorate([
-        $mol_mem_key
-    ], $mol_store_local_class.prototype, "value", null);
-    $.$mol_store_local_class = $mol_store_local_class;
-    $.$mol_store_local = new $mol_store_local_class;
-})($ || ($ = {}));
-//mol/store/local/local.ts
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_import extends $mol_object2 {
         static module(uri) {
             return $mol_wire_sync(this).module_async(uri);
@@ -10146,7 +10021,7 @@ var $;
                 }));
             }
             wallet_words(next) {
-                return this.$.$mol_store_local.value('wallet', next);
+                return this.$.$mol_state_local.value('wallet', next);
             }
             import_words_count() {
                 return this.import_words().split(/\s+/).filter(Boolean).length;
@@ -10162,19 +10037,13 @@ var $;
                 this.import_words('');
             }
             export_words() {
-                return this.wallet_words().join(' ');
+                return (this.wallet_words() ?? []).join(' ');
             }
             wallet_keys() {
                 let words = this.wallet_words();
                 if (!words)
-                    return this.wallet_words($mol_ton_wallet.words_create());
+                    words = this.wallet_words($mol_ton_wallet.words_create());
                 return $mol_ton_wallet.words_to_pair(words);
-            }
-            awaiting_tools() {
-                return !this.wallet_words() ? [] : [this.Wallet_balance()];
-            }
-            awaiting_body() {
-                return [this.Subscription_block(), this.Awaiting_targets_block()];
             }
             wallet() {
                 const ton = new $mol_ton;

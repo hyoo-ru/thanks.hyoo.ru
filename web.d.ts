@@ -2670,52 +2670,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_store<Data> extends $mol_object2 {
-        data_default?: Data | undefined;
-        constructor(data_default?: Data | undefined);
-        data(next?: Data): Data;
-        snapshot(next?: string): string;
-        value<Key extends keyof Data>(key: Key, next?: Data[Key]): NonNullable<Data[Key]>;
-        selection<Key extends keyof Data>(key: Key, next?: number[]): number[];
-        sub<Key extends keyof Data, Lens extends $mol_store<Data[Key]> = $mol_store<NonNullable<Data[Key]>>>(key: Key, lens?: Lens): NonNullable<Lens>;
-        reset(): void;
-        active(): boolean;
-    }
-}
-
-declare namespace $ {
-    class $mol_mem_force extends Object {
-        constructor();
-        $mol_mem_force: boolean;
-        static $mol_mem_force: boolean;
-        static toString(): string;
-    }
-    class $mol_mem_force_cache extends $mol_mem_force {
-    }
-    class $mol_mem_force_update extends $mol_mem_force {
-    }
-    class $mol_mem_force_fail extends $mol_mem_force_cache {
-    }
-}
-
-declare namespace $ {
-    class $mol_store_local_class extends $mol_store<Record<string, any>> {
-        native(): Storage | {
-            map: Map<string, string>;
-            getItem: (key: string) => string | undefined;
-            setItem: (key: string, value: string) => Map<string, string>;
-            removeItem: (key: string) => boolean;
-        };
-        data(): never;
-        value<Value>(key: string, next?: Value, force?: $mol_mem_force_cache): any;
-    }
-    let $mol_store_local: $mol_store<Record<string, any>>;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_import extends $mol_object2 {
         static module(uri: string): any;
         static module_async(uri: string): Promise<any>;
@@ -2931,15 +2885,13 @@ declare namespace $.$$ {
             shares: string;
             TONs: string;
         }[];
-        wallet_words(next?: string[]): any;
+        wallet_words(next?: string[]): string[] | null;
         import_words_count(): number;
         import_info(): string;
         import_button_enabled(): boolean;
         import_wallet(): void;
-        export_words(): any;
-        wallet_keys(): any;
-        awaiting_tools(): $mol_link[];
-        awaiting_body(): $mol_labeler[];
+        export_words(): string;
+        wallet_keys(): nacl.SignKeyPair;
         wallet(): $mol_ton_wallet;
         wallet_address(): any;
         wallet_balance(): string;
