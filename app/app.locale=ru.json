@@ -15,7 +15,7 @@
 	"$hyoo_thanks_app_import_info": "Требуется {num} секртеных слов",
 	"$hyoo_thanks_app_Import_button_title": "Импорт",
 	"$hyoo_thanks_app_Import_deck_title": "Импорт",
-	"$hyoo_thanks_app_Export_info_title": "Скопируйте 24 секретных слова в надежное место",
+	"$hyoo_thanks_app_Export_deck_bid": "Скопируйте 24 секретных слова в надежное место",
 	"$hyoo_thanks_app_Export_deck_title": "Экспорт",
 	"$hyoo_thanks_app_Wallet_page_title": "Кошелек"
 }
