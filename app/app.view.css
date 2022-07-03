@@ -27,7 +27,7 @@
 }
 
 [hyoo_thanks_app_wallet_page] {
-	flex-basis: 21rem;
+	flex-basis: 30rem;
 	flex-shrink: 0;
 }
 
@@ -38,5 +38,17 @@
 }
 
 [hyoo_thanks_app_export_words] {
-	color: var(--mol_theme_special)
+	padding: var(--mol_gap_text);
+}
+
+[hyoo_thanks_app_deck_switch] {
+	padding: var(--mol_gap_block);
+}
+
+[hyoo_thanks_app_wallet_address] {
+	padding: var(--mol_gap_text);
+}
+
+[hyoo_thanks_app_import_words] {
+	flex-shrink: 1;
 }

@@ -107,21 +107,18 @@ $hyoo_thanks_app $mol_book2_catalog
 											text <= wallet_address
 									Content <= Wallet_address $mol_paragraph
 										title <= wallet_address \
-						<= Import_deck $mol_view
+						<= Import_deck $mol_form_field
 							title @ \Import
-							sub /
-								<= Import_info $mol_paragraph
-									title <= import_info @ \Import wallet by entering the {num} secret words, separated by space
+							bid <= import_info @ \{num} secret words is required
+							content /
 								<= Import_words $mol_textarea
 									value? <=> import_words? \
 								<= Import_button $mol_button_major
 									title @ \Import
 									click? <=> import_wallet? null
 									enabled <= import_button_enabled false
-						<= Export_deck $mol_view
+						<= Export_deck $mol_form_field
 							title @ \Export
-							sub /
-								<= Export_info $mol_paragraph
-									title @ \Copy the 24 secret words to a safe place:
-								<= Export_words $mol_paragraph
-									title <= export_words \
+							bid @ \Copy the 24 secret words to a safe place
+							Content <= Export_words $mol_paragraph
+								title <= export_words \
