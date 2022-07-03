@@ -2688,15 +2688,13 @@ declare namespace $ {
         Welcome(): $mol_page;
         Wallet_icon(): $mol_icon_wallet;
         wallet_balance(): string;
-        Wallet_balance(): $$.$mol_link;
-        awaiting_tools(): readonly any[];
+        Wallet_balance(id: any): $$.$mol_link;
         subscription(next?: any): number;
         Subscription(): $$.$mol_number;
         Subscription_block(): $mol_labeler;
         shares(): readonly any[];
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
-        awaiting_body(): readonly any[];
         Awaiting(): $mol_page;
         story_text(): string;
         Story_text(): $$.$mol_text;

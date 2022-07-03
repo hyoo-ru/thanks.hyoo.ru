@@ -624,7 +624,7 @@ $hyoo_thanks_app $mol_book2_catalog
 					<= Welcome_text $mol_text
 						text <= welcome_text @ \
 							\# How it works
-							\- The author places [a link to this service]({my_link}) next to their content.
+							\- The author places [this link]({my_link}) next to their content, which contains the wallet address.
 							\- The user signs up for **one fixed subscription** - as much as you can afford to encourage authors.
 							\- During the month, they uses the Internet and **sticks the likes**.
 							\- At the end of the month, the subscription amount is **automatically distributed** among the authors.
@@ -649,14 +649,14 @@ $hyoo_thanks_app $mol_book2_catalog
 							\Then as a user [recharge your personal fund](https://t.me/testgiver_ton_bot) and put [browser extension](https://github.com/hyoo-ru/thanks.hyoo.ru/tree/master/extension), and as an author, put [link]({my_link}) next to your content.
 		awaiting <= Awaiting $mol_page
 			title @ \Subscription
-			tools <= awaiting_tools /
-				<= Wallet_balance $mol_link
+			tools / 
+				<= Wallet_balance*0 $mol_link
 					hint @ \Wallet
 					uri \https://t.me/testgiver_ton_bot
 					sub /
 						<= Wallet_icon $mol_icon_wallet
 						<= wallet_balance \
-			body <= awaiting_body /
+			body /
 				<= Subscription_block $mol_labeler
 					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
@@ -690,7 +690,9 @@ $hyoo_thanks_app $mol_book2_catalog
 						\
 						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.
 		wallet <= Wallet_page $mol_page
-			title <= wallet_balance
+			title @ \Wallet
+			tools /
+				<= Wallet_balance*1
 			body /
 				<= Deck $mol_deck
 					items /

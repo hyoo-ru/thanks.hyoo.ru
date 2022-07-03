@@ -8613,7 +8613,7 @@ var $;
         wallet_balance() {
             return "";
         }
-        Wallet_balance() {
+        Wallet_balance(id) {
             const obj = new this.$.$mol_link();
             obj.hint = () => this.$.$mol_locale.text('$hyoo_thanks_app_Wallet_balance_hint');
             obj.uri = () => "https://t.me/testgiver_ton_bot";
@@ -8622,11 +8622,6 @@ var $;
                 this.wallet_balance()
             ];
             return obj;
-        }
-        awaiting_tools() {
-            return [
-                this.Wallet_balance()
-            ];
         }
         subscription(next) {
             if (next !== undefined)
@@ -8658,17 +8653,16 @@ var $;
             obj.Content = () => this.Awaiting_targets();
             return obj;
         }
-        awaiting_body() {
-            return [
-                this.Subscription_block(),
-                this.Awaiting_targets_block()
-            ];
-        }
         Awaiting() {
             const obj = new this.$.$mol_page();
             obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Awaiting_title');
-            obj.tools = () => this.awaiting_tools();
-            obj.body = () => this.awaiting_body();
+            obj.tools = () => [
+                this.Wallet_balance("0")
+            ];
+            obj.body = () => [
+                this.Subscription_block(),
+                this.Awaiting_targets_block()
+            ];
             return obj;
         }
         story_text() {
@@ -8784,7 +8778,10 @@ var $;
         }
         Wallet_page() {
             const obj = new this.$.$mol_page();
-            obj.title = () => this.wallet_balance();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_thanks_app_Wallet_page_title');
+            obj.tools = () => [
+                this.Wallet_balance("1")
+            ];
             obj.body = () => [
                 this.Deck()
             ];
@@ -8825,7 +8822,7 @@ var $;
         $mol_mem
     ], $hyoo_thanks_app.prototype, "Wallet_icon", null);
     __decorate([
-        $mol_mem
+        $mol_mem_key
     ], $hyoo_thanks_app.prototype, "Wallet_balance", null);
     __decorate([
         $mol_mem
