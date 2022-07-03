@@ -2605,8 +2605,6 @@ declare namespace $ {
         Theme(): $$.$mol_theme_auto;
         target_title(): string;
         target_likes(next?: any): number;
-        target_likes_inc(next?: any): any;
-        target_likes_dec(next?: any): any;
         Target_likes(): $$.$mol_number;
         target_hint(): $$.$mol_link;
         welcome_text(): string;
@@ -2628,6 +2626,8 @@ declare namespace $ {
         shares(): readonly any[];
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
+        pay(next?: any): any;
+        Send(): $mol_button_major;
         awaiting_body(): readonly any[];
         Awaiting(): $mol_page;
         story_text(): string;
@@ -2900,6 +2900,7 @@ declare namespace $.$$ {
             target: string;
             likes: number;
             shares: string;
+            TONs: string;
         }[];
         wallet_words(next?: string[]): any;
         import_label(): string;
@@ -2910,6 +2911,13 @@ declare namespace $.$$ {
         wallet(): $mol_ton_wallet;
         wallet_address(): any;
         wallet_balance(): string;
+        enqueue_transfer_list(): void;
+        enqueue_transfer(address: string, val: number): void;
+        queue(next?: {
+            address: string;
+            amount: string;
+            seqno?: number;
+        }[]): void;
     }
 }
 
