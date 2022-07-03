@@ -6,11 +6,11 @@ chrome.action.onClicked.addListener( tab => {
 	
 } )
 
-chrome.action.disable()
+// chrome.action.disable()
 
 chrome.runtime.onConnect.addListener( content => {
 	
-	chrome.action.enable( content.sender.tab.id )
+	// chrome.action.enable( content.sender.tab.id )
 	
 	content.onMessage.addListener( async ( msg )=> {
 		

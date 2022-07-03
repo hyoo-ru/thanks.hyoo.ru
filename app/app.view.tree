@@ -12,7 +12,7 @@ $hyoo_thanks_app $mol_book2_catalog
 	Target $mol_page
 		title <= target_title @ \Thanks {name}
 		body /
-			<= Target_likes $mol_number
+			<= Target_likes $hyoo_thnaks_app_likes
 				value? <=> target_likes? 0
 			<= target_hint $mol_link
 				arg * section null
@@ -122,3 +122,7 @@ $hyoo_thanks_app $mol_book2_catalog
 						\Thanks to a browser plug-in, $hyoo_thanks keeps track of what Arnold liked, and at the end of the month automatically divides a fixed amount of 10 vanish coins proportionally between all the authors who made his life a little bit better this month.
 						\
 						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.
+
+$hyoo_thnaks_app_likes $mol_number
+	dec_icon $mol_icon_thumb_down
+	inc_icon $mol_icon_thumb_up
