@@ -12,7 +12,7 @@ $hyoo_thanks_app $mol_book2_catalog
 	Target $mol_page
 		title <= target_title @ \Thanks {name}
 		body /
-			<= Target_likes $mol_number
+			<= Target_likes $hyoo_thnaks_app_likes
 				value? <=> target_likes? 0
 			<= target_hint $mol_link
 				arg * section null
@@ -120,3 +120,7 @@ $hyoo_thanks_app $mol_book2_catalog
 							bid @ \Copy the 24 secret words to a safe place
 							Content <= Export_words $mol_paragraph
 								title <= export_words \
+
+$hyoo_thnaks_app_likes $mol_number
+	dec_icon $mol_icon_thumb_down
+	inc_icon $mol_icon_thumb_up
