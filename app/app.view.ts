@@ -72,7 +72,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		wallet_words(next?: string[]) {
-			return this.$.$mol_store_local.value( 'wallet' , next )
+			return this.$.$mol_state_local.value( 'wallet' , next )
 		}
 
 		import_words_count() {
@@ -93,21 +93,13 @@ namespace $.$$ {
 		}
 
 		export_words() {
-			return this.wallet_words().join(' ')
+			return (this.wallet_words() ?? []).join(' ')
 		}
 
 		wallet_keys() {
 			let words = this.wallet_words()
-			if (!words) return this.wallet_words( $mol_ton_wallet.words_create() )
+			if (!words) words = this.wallet_words( $mol_ton_wallet.words_create() )!
 			return $mol_ton_wallet.words_to_pair(words)
-		}
-
-		awaiting_tools() {
-			return !this.wallet_words() ? [] : [this.Wallet_balance()]
-		}
-
-		awaiting_body() {
-			return [this.Subscription_block(), this.Awaiting_targets_block()]
 		}
 
 		@ $mol_mem
