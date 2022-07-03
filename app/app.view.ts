@@ -12,14 +12,10 @@ namespace $.$$ {
 		target() {
 			return this.$.$mol_state_arg.value( 'to' ) ?? ''
 		}
-
-		target_person() {
-			return this.person( this.target() )
-		}
 		
 		@ $mol_mem
 		target_name() {
-			return this.target_person().name()
+			return this.short_name( this.target() )
 		}
 		
 		@ $mol_mem_key
@@ -36,7 +32,14 @@ namespace $.$$ {
 		@ $mol_mem
 		welcome_text() {
 			return super.welcome_text()
-				.replace( /{my_link}/g, this.person_link() )
+				.replace( /{my_link}/g, '#!to=EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7/section=target' )
+		}
+		
+		@ $mol_mem
+		likes( next?: Record< string, number > ) {
+			return this.$.$mol_state_local.value( 'likes', next ) ?? {
+				'EQAyyEkW6tPWofboOqzZcHglL9kk6Az6mpnMxSwNyhDz36z7': 1,
+			}
 		}
 		
 		@ $mol_mem
@@ -44,54 +47,52 @@ namespace $.$$ {
 			return this.$.$mol_state_local.value( 'subscription', next ) ?? 10
 		}
 		
-		target_likes_inc() {
-			this.user().like_change( this.target_person(), 1 )
-			this.target_likes( this.target_likes() + 1 )
-		}
-
-		target_likes_dec() {
-			this.user().like_change( this.target_person(), -1 )
-			this.target_likes( this.target_likes() - 1 )
+		@ $mol_mem
+		target_likes( next?: number ) {
+			return this.likes(
+				next?.valueOf && { ... this.likes(), [ this.target() ]: next }
+			)[ this.target() ] ?? 0
 		}
 		
 		@ $mol_mem
 		shares() {
 			
-			const like_persons = this.user().like_persons()
-			const like_count = like_persons.map( person => this.user().like_count(person) )
-
-			const total = like_count.reduce( (a,b)=> a+b , 0 )
+			const likes = this.likes()
+			const total = Object.values( likes ).reduce( ( a, b )=> a + b, 0 )
 			
-			return like_persons.map( (person, i) => ({
-				target: person.name(),
-				likes: like_count[i],
-				shares: `${ Math.round( like_count[i] / total * 100 ) } %`,
+			return Object.keys( likes ).map( target => ({
+				target: this.short_name( target ),
+				likes: likes[ target ],
+				shares: `${ Math.round( likes[ target ] / total * 100 ) } %`,
 			}) )
 			
 		}
 
-		person_name(next?: string) {
-			return this.user().name(next)
+		@ $mol_mem
+		wallet_keys() {
+			let words = this.$.$mol_store_local.value( 'wallet' )
+			if (!words) {
+				words = this.$.$mol_store_local.value( 'wallet', $mol_ton_wallet.words_create() )
+			}
+			return $mol_ton_wallet.words_to_pair(words)
+		}
+		
+		@ $mol_mem
+		wallet() {
+			const ton = new $mol_ton
+			return ton.wallet( this.wallet_keys() )
 		}
 
-		person_wallet() {
-			return this.user().wallet().address().toString(true, true, true)
+		wallet_address() {
+			return this.wallet().address().toString(true, true, true, this.wallet().ton().is_testnet())
 		}
 
-		person_balance() {
-			return this.user().wallet().balance()
+		wallet_balance() {
+			return this.wallet().balance() + ' TON'
 		}
 
-		person_link() {
-			return this.Person_link().uri()
-		}
-
-		person_id() {
-			return this.user().id()
-		}
-
-		auto() {
-			this.domain().state().socket()
+		likes_link() {
+			return this.Likes_link().uri()
 		}
 		
 	}
