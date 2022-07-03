@@ -519,6 +519,9 @@ $mol_labeler $mol_list
 			sub <= content /
 
 $hyoo_thanks_app $mol_book2_catalog
+	domain $hyoo_thanks_app_domain
+		user => user
+		person* => person*
 	target? \
 	menu_title \$hyoo_thanks
 	menu_tools /
@@ -534,6 +537,8 @@ $hyoo_thanks_app $mol_book2_catalog
 		body /
 			<= Target_likes $mol_number
 				value? <=> target_likes? 0
+				event_inc? <=> target_likes_inc? null
+				event_dec? <=> target_likes_dec? null
 			<= target_hint $mol_link
 				arg * section null
 				title @ \What is it?
@@ -610,3 +615,31 @@ $hyoo_thanks_app $mol_book2_catalog
 						\Thanks to a browser plug-in, $hyoo_thanks keeps track of what Arnold liked, and at the end of the month automatically divides a fixed amount of 10 vanish coins proportionally between all the authors who made his life a little bit better this month.
 						\
 						\No more routine distracted Arnold from his creativity - only now he felt like a truly free man. And there was much more interesting and high-quality content on the Web. Even if Arnold's own contribution to it was quite insignificant.
+		person <= Person $mol_page
+			title @ \User
+			body /
+				<= Person_name_block $mol_labeler
+					title @ \Name
+					Content <= Person_name $mol_string
+						value? <=> person_name? \
+				<= Person_link_block $mol_labeler
+					label /
+						<= person_link_label @ \Thanks link
+						<= Person_link_copy $mol_button_copy
+							text <= person_link
+					Content <= Person_link $mol_link
+						title <= person_link \
+						arg *
+							to <= person_id \
+							section \target
+				<= Person_wallet_block $mol_labeler
+					label /
+						<= wallet_label @ \Wallet address
+						<= Wallet_copy $mol_button_copy
+							text <= person_wallet
+					Content <= Person_wallet $mol_paragraph
+						title <= person_wallet \
+				<= Person_balance_block $mol_labeler
+					title @ \Wallet balance
+					Content <= Person_balance $mol_paragraph
+						title <= person_balance \
