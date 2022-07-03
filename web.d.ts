@@ -3159,6 +3159,7 @@ declare namespace $.$$ {
         person_name(next?: string): string;
         person_wallet(): any;
         person_balance(): string;
+        wallet(): string;
         person_link(): string;
         person_id(): string;
         auto(): void;
