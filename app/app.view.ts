@@ -85,8 +85,8 @@ namespace $.$$ {
 		}
 
 		wallet_keys() {
-			const words = this.wallet_words()
-			if (!words) return null
+			let words = this.wallet_words()
+			if (!words) return this.wallet_words( $mol_ton_wallet.words_create() )
 			return $mol_ton_wallet.words_to_pair(words)
 		}
 
