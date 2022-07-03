@@ -14,8 +14,6 @@ $hyoo_thanks_app $mol_book2_catalog
 		body /
 			<= Target_likes $mol_number
 				value? <=> target_likes? 0
-				event_inc? <=> target_likes_inc? null
-				event_dec? <=> target_likes_dec? null
 			<= target_hint $mol_link
 				arg * section null
 				title @ \What is it?
@@ -61,7 +59,7 @@ $hyoo_thanks_app $mol_book2_catalog
 						<= wallet_balance \
 			body <= awaiting_body /
 				<= Import_block $mol_labeler
-					title <= import_label @ \Enter {num} words
+					title <= import_label @ \Change wallet
 					content /
 						<= Import_words $mol_textarea
 							value? <=> import_words? \
@@ -72,10 +70,14 @@ $hyoo_thanks_app $mol_book2_catalog
 					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
 						value? <=> subscription? 10
+						precision 0.1
 				<= Awaiting_targets_block $mol_labeler
 					title @ \This Month Shares
 					Content <= Awaiting_targets $mol_grid
 						records <= shares /
+				<= Send $mol_button_major
+					title \Send
+					click? <=> pay? null
 		story <= Story $mol_page
 			title @ \Arnold's Story
 			body /
