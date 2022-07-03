@@ -100,10 +100,23 @@ $hyoo_thanks_app $mol_book2_catalog
 					Content <= Person_name $mol_string
 						value? <=> person_name? \
 				<= Person_wallet_block $mol_labeler
-					title @ \Wallet address
+					label /
+						<= wallet_label @ \Wallet address
+						<= Wallet_copy $mol_button_copy
+							text <= person_wallet
 					Content <= Person_wallet $mol_paragraph
 						title <= person_wallet \
 				<= Person_balance_block $mol_labeler
 					title @ \Wallet balance
-					Content <= Person_wallet_balance $mol_paragraph
-						title <= person_wallet_balance \
+					Content <= Person_balance $mol_paragraph
+						title <= person_balance \
+				<= Person_link_block $mol_labeler
+					label /
+						<= person_link_label @ \Thanks link
+						<= Person_link_copy $mol_button_copy
+							text <= person_link
+					Content <= Person_link $mol_link
+						title <= person_link \
+						arg *
+							to <= person_wallet
+							section \target

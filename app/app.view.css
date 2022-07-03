@@ -22,3 +22,10 @@
 	flex-basis: 18rem;
 	flex-shrink: 0;
 }
+
+[hyoo_thanks_app_person_link_block_label],
+[hyoo_thanks_app_person_wallet_block_label] {
+	padding-top: 0;
+	padding-bottom: 0;
+	align-items: center;
+}

@@ -76,8 +76,12 @@ namespace $.$$ {
 			return this.user().wallet().address().toString(true, true, true)
 		}
 
-		person_wallet_balance() {
+		person_balance() {
 			return this.user().wallet().balance()
+		}
+
+		person_link() {
+			return this.Person_link().uri()
 		}
 
 		auto() {
