@@ -111,7 +111,7 @@ $mol_book2_catalog $mol_book2
 					rows <= links /
 	Link* $mol_link
 		arg <= arg* *
-		sub /
+		sub <= link_content* /
 			<= spread_title* \
 	Spread_close $mol_link
 		arg <= spread_close_arg *
@@ -428,6 +428,7 @@ $mol_text $mol_list
 		highlight <= highlight \
 		auto_scroll null
 	Header* $mol_text_header
+		minimal_height 40
 		dom_name <= header_level* \h
 		content <= block_content* /
 		arg <= header_arg* *

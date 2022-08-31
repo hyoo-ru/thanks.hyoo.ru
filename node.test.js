@@ -4059,9 +4059,7 @@ var $;
         Link(id) {
             const obj = new this.$.$mol_link();
             obj.arg = () => this.arg(id);
-            obj.sub = () => [
-                this.spread_title(id)
-            ];
+            obj.sub = () => this.link_content(id);
             return obj;
         }
         Spread_close() {
@@ -4104,6 +4102,11 @@ var $;
         }
         spread_title(id) {
             return "";
+        }
+        link_content(id) {
+            return [
+                this.spread_title(id)
+            ];
         }
         spread_close_arg() {
             return {};
@@ -7724,6 +7727,7 @@ var $;
         }
         Header(id) {
             const obj = new this.$.$mol_text_header();
+            obj.minimal_height = () => 40;
             obj.dom_name = () => this.header_level(id);
             obj.content = () => this.block_content(id);
             obj.arg = () => this.header_arg(id);
