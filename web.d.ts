@@ -576,7 +576,7 @@ declare namespace $ {
         plugins(): readonly $mol_view[];
         view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
         force_render(path: Set<$mol_view>): void;
-        ensure_visible(view: $mol_view, align?: ScrollLogicalPosition): Promise<void>;
+        ensure_visible(view: $mol_view, align?: ScrollLogicalPosition): void;
         bring(): void;
     }
     type $mol_view_all = $mol_type_pick<$, typeof $mol_view>;
@@ -1060,9 +1060,10 @@ declare namespace $ {
         Spread_close(): $$.$mol_link;
         menu_title(): string;
         menu_tools(): readonly any[];
-        menu_foot(): readonly any[];
         links(): readonly any[];
         Links(): $$.$mol_list;
+        menu_body(): readonly any[];
+        menu_foot(): readonly any[];
         Menu(): $mol_page;
         arg(id: any): {};
         spread_title(id: any): string;
@@ -2714,7 +2715,7 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
-        keys(): string[];
+        keys(): readonly string[];
         items(): $mol_check[];
         option_title(key: string): string;
     }
