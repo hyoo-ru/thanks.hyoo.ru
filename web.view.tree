@@ -197,6 +197,7 @@ $mol_paragraph $mol_view
 	line_height 24
 	letter_width 7
 	width_limit +Infinity
+	row_width 0
 	sub / <= title
 
 $mol_dimmer $mol_paragraph
@@ -564,11 +565,12 @@ $mol_text $mol_list
 		text <= quote_text* \
 		highlight <= highlight \
 		auto_scroll null
-	List* $mol_text
+	List* $mol_text_list
 		uri_resolve* <= uri_resolve* \
+		type <= list_type* \-
 		text <= list_text* \
 		highlight <= highlight \
-		auto_scroll null
+	item_index* 0
 	Header* $mol_text_header
 		minimal_height 40
 		level <= header_level* 1
@@ -746,6 +748,20 @@ $mol_deck $mol_list
 $mol_icon_thumb_down $mol_icon path \M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14C1,15.1 1.9,16 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z
 
 $mol_icon_thumb_up $mol_icon path \M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19C7,20.1 7.9,21 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z
+
+$mol_text_list $mol_text
+	auto_scroll null
+	attr *
+		^
+		mol_text_list_type <= type \
+	Paragraph* $mol_text_list_item
+		index <= item_index*
+		sub <= block_content*
+
+$mol_text_list_item $mol_paragraph
+	attr *
+		^
+		mol_text_list_item_index <= index 0
 
 $mol_row $mol_view
 
