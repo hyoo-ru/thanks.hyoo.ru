@@ -9932,8 +9932,10 @@ var $;
                 this.Bid()
             ];
         }
-        Content() {
-            return this.control();
+        content() {
+            return [
+                this.control()
+            ];
         }
         name() {
             return "";
@@ -11687,7 +11689,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_welcome_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_story_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_target_body] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_awaiting] {\n\tflex-basis: 30rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_awaiting_body] > * {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_deck],\n[hyoo_thanks_app_import_deck],\n[hyoo_thanks_app_export_deck] {\n\tpadding: var(--mol_gap_block);\n\tflex-direction: column;\n}\n\n[hyoo_thanks_app_wallet_page] {\n\tflex-basis: 30rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_wallet_block_label] {\n\tpadding-top: 0;\n\tpadding-bottom: 0;\n\talign-items: center;\n}\n\n[hyoo_thanks_app_export_words] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_thanks_app_deck_switch] {\n\tpadding: var(--mol_gap_block);\n}\n\n[hyoo_thanks_app_wallet_address] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_thanks_app_import_words] {\n\tflex-shrink: 1;\n}\n");
+    $mol_style_attach("hyoo/thanks/app/app.view.css", "[hyoo_thanks_app_awaiting] {\n\tflex-basis: 30rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_wallet_deck],\n[hyoo_thanks_app_import_deck],\n[hyoo_thanks_app_export_deck] {\n\tflex-direction: column;\n}\n\n[hyoo_thanks_app_wallet_page] {\n\tflex-basis: 30rem;\n\tflex-shrink: 0;\n}\n\n[hyoo_thanks_app_wallet_block_label] {\n\tpadding-top: 0;\n\tpadding-bottom: 0;\n\talign-items: center;\n}\n\n[hyoo_thanks_app_export_words] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_thanks_app_wallet_address] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_thanks_app_import_words] {\n\tflex-shrink: 1;\n}\n");
 })($ || ($ = {}));
 //hyoo/thanks/app/-css/app.view.css.ts
 ;
