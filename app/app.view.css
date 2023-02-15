@@ -1,28 +1,11 @@
-[hyoo_thanks_app_welcome_body] {
-	padding: var(--mol_gap_block);
-}
-
-[hyoo_thanks_app_story_body] {
-	padding: var(--mol_gap_block);
-}
-
-[hyoo_thanks_app_target_body] {
-	padding: var(--mol_gap_block);
-}
-
 [hyoo_thanks_app_awaiting] {
 	flex-basis: 30rem;
 	flex-shrink: 0;
 }
 
-[hyoo_thanks_app_awaiting_body] > * {
-	padding: var(--mol_gap_block);
-}
-
 [hyoo_thanks_app_wallet_deck],
 [hyoo_thanks_app_import_deck],
 [hyoo_thanks_app_export_deck] {
-	padding: var(--mol_gap_block);
 	flex-direction: column;
 }
 
@@ -39,10 +22,6 @@
 
 [hyoo_thanks_app_export_words] {
 	padding: var(--mol_gap_text);
-}
-
-[hyoo_thanks_app_deck_switch] {
-	padding: var(--mol_gap_block);
 }
 
 [hyoo_thanks_app_wallet_address] {
