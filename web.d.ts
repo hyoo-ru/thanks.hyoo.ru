@@ -1539,8 +1539,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): readonly string[];
-    function $mol_huggingface_async(space: string, method: number, ...data: readonly any[]): Promise<[string]> & {
+    function $mol_huggingface_run(this: $, space: string, method: string | number, ...data: readonly any[]): any[] | readonly string[];
+    function $mol_huggingface_async(space: string, method: number, ...data: readonly any[]): Promise<any[]> & {
         destructor: () => void;
     };
 }
@@ -1558,7 +1558,7 @@ declare namespace $ {
         static lang(next?: string): string;
         static source(lang: string): any;
         static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
-        static text(key: string): {} | null;
+        static text(key: string): string;
         static warn(key: string): null;
     }
 }
@@ -1891,7 +1891,7 @@ declare namespace $ {
         nav_focused(component?: any): any;
         Nav(): $$.$mol_nav;
         suggests_showed(val?: any): boolean;
-        hint(): {} | null;
+        hint(): string;
         submit(event?: any): any;
         enabled(): boolean;
         keyboard(): string;
@@ -2015,7 +2015,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link_source extends $mol_link {
-        hint(): {} | null;
+        hint(): string;
         sub(): readonly any[];
         Icon(): $mol_icon_github_circle;
     }
@@ -2075,7 +2075,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_lights_toggle extends $mol_check_icon {
         Icon(): $mol_icon_brightness_6;
-        hint(): {} | null;
+        hint(): string;
         checked(val?: any): boolean;
         Lights_icon(): $mol_icon_brightness_6;
         lights(val?: any): boolean;
@@ -3236,11 +3236,11 @@ declare namespace $ {
         Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
         Theme(): $$.$mol_theme_auto;
-        target_title(): {} | null;
+        target_title(): string;
         target_likes(next?: any): number;
         Target_likes(): $hyoo_thnaks_app_likes;
         target_hint(): $$.$mol_link;
-        welcome_text(): {} | null;
+        welcome_text(): string;
         Welcome_text(): $$.$mol_text;
         Welcome(): $mol_page;
         Wallet_icon(): $mol_icon_wallet;
@@ -3253,13 +3253,13 @@ declare namespace $ {
         Awaiting_targets(): $$.$mol_grid;
         Awaiting_targets_block(): $mol_labeler;
         Awaiting(): $mol_page;
-        wallet_label(): {} | null;
+        wallet_label(): string;
         Wallet_copy(): $$.$mol_button_copy;
         wallet_address(): string;
         Wallet_address(): $$.$mol_paragraph;
         Wallet_block(): $mol_labeler;
         Wallet_deck(): $mol_view;
-        import_info(): {} | null;
+        import_info(): string;
         import_words(next?: any): string;
         Import_words(): $$.$mol_textarea;
         import_wallet(next?: any): any;
@@ -3271,7 +3271,7 @@ declare namespace $ {
         Export_deck(): $$.$mol_form_field;
         Deck(): $$.$mol_deck;
         Wallet_page(): $mol_page;
-        story_text(): {} | null;
+        story_text(): string;
         Story_text(): $$.$mol_text;
         Story(): $mol_page;
     }
@@ -3494,8 +3494,8 @@ declare namespace $.$$ {
         target(): string;
         target_name(): string;
         short_name(name: string): string;
-        target_title(): any;
-        welcome_text(): any;
+        target_title(): string;
+        welcome_text(): string;
         likes(next?: Record<string, number>): Record<string, number>;
         subscription(next?: number): number;
         target_likes(next?: number): number;
@@ -3507,7 +3507,7 @@ declare namespace $.$$ {
         }[];
         wallet_words(next?: string[]): string[] | null;
         import_words_count(): number;
-        import_info(): any;
+        import_info(): string;
         import_button_enabled(): boolean;
         import_wallet(): void;
         export_words(): string;
