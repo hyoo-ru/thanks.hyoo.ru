@@ -45,7 +45,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		subscription( next?: number ) {
-			return this.$.$mol_state_local.value( 'subscription', next ) ?? 10
+			return this.$.$mol_state_local.value( 'subscription', next ) ?? super.subscription()
 		}
 		
 		@ $mol_mem
