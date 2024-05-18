@@ -11415,7 +11415,7 @@ var $;
                 };
             }
             subscription(next) {
-                return this.$.$mol_state_local.value('subscription', next) ?? 10;
+                return this.$.$mol_state_local.value('subscription', next) ?? super.subscription();
             }
             target_likes(next) {
                 return this.likes(next?.valueOf && { ...this.likes(), [this.target()]: next })[this.target()] ?? 0;
