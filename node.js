@@ -11875,7 +11875,7 @@ var $;
             transfer_next_moment(next) {
                 let str = this.$.$mol_state_local.value('transfer_next_moment', next && next.toString());
                 if (!str) {
-                    const next = new $mol_time_moment().merge({ day: 0 }).shift({ month: 1, day: -1 });
+                    const next = new $mol_time_moment().merge({ day: 0 }).shift(this.wallet().ton().is_testnet() ? { day: 1 } : { month: 1 });
                     str = this.$.$mol_state_local.value('transfer_next_moment', next.toString());
                 }
                 return new $mol_time_moment(str);
