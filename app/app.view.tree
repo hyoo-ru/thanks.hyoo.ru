@@ -61,7 +61,7 @@ $hyoo_thanks_app $mol_book2_catalog
 				<= Subscription_block $mol_labeler
 					title @ \Monthly Subscription (TON)
 					Content <= Subscription $mol_number
-						value? <=> subscription? 10
+						value? <=> subscription? 0.1
 				<= Awaiting_targets_block $mol_labeler
 					title @ \This Month Shares
 					Content <= Awaiting_targets $mol_grid
