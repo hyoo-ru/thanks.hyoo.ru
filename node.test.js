@@ -10679,9 +10679,9 @@ var $;
 			return "";
 		}
 		menu_title(){
-			return "$hyoo_thanks";
+			return (this.$.$mol_locale.text("$hyoo_thanks_app_menu_title"));
 		}
-		menu_tools(){
+		menu_foot(){
 			return [(this?.Source()), (this?.Lights())];
 		}
 		plugins(){
