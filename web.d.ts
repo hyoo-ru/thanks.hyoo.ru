@@ -4497,7 +4497,7 @@ declare namespace $ {
         testnet(): string;
         mainnet(): string;
         is_testnet(next?: boolean): boolean;
-        provider(): import("tonweb/dist/types/providers/http-provider").HttpProvider;
+        provider(): any;
         api(): import("tonweb").default;
         wallet(key: ReturnType<$mol_ton_wallet['keys']> | string): $mol_ton_wallet;
         transaction(data: any): $mol_ton_transaction;
@@ -4661,7 +4661,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_ton_wallet extends $mol_object2 {
-        static Wallet(type?: string): typeof import("tonweb/dist/types/contract/wallet/v3/wallet-v3-contract-r2").WalletV3ContractR2 | typeof import("tonweb/dist/types/contract/wallet/simple/simple-wallet-contract-r1").SimpleWalletContractR1 | typeof import("tonweb/dist/types/contract/wallet/simple/simple-wallet-contract-r2").SimpleWalletContractR2 | typeof import("tonweb/dist/types/contract/wallet/simple/simple-wallet-contract-r3").SimpleWalletContractR3 | typeof import("tonweb/dist/types/contract/wallet/v2/wallet-v2-contract-r1").WalletV2ContractR1 | typeof import("tonweb/dist/types/contract/wallet/v2/wallet-v2-contract-r2").WalletV2ContractR2 | typeof import("tonweb/dist/types/contract/wallet/v3/wallet-v3-contract-r1").WalletV3ContractR1 | typeof import("tonweb/dist/types/contract/wallet/v4/wallet-v4-contract-r1").WalletV4ContractR1 | typeof import("tonweb/dist/types/contract/wallet/v4/wallet-v4-contract-r2").WalletV4ContractR2;
+        static Wallet(type?: string): any;
         static words_create(): string[];
         static words_to_pair(words: string[]): nacl.SignKeyPair;
         ton(): $mol_ton;
@@ -4670,12 +4670,12 @@ declare namespace $ {
             secretKey: Uint8Array;
         };
         obj(): InstanceType<ReturnType<typeof $mol_ton_wallet.Wallet>>;
-        address(): import("tonweb/dist/types/utils/address").Address;
+        address(): any;
         info(force?: any): any;
-        seqno(): number | undefined;
+        seqno(): any;
         initialized(): boolean;
         balance(): string;
-        transfer(address: string, amount: string, payload: string, seqno: number): import("tonweb").Method;
+        transfer(address: string, amount: string, payload: string, seqno: number): any;
         send(address: string, amount: string, payload: string, seqno: number): boolean;
         transactions(count?: number): $mol_ton_transaction[];
     }
@@ -5010,7 +5010,7 @@ declare namespace $.$$ {
         export_words(): string;
         wallet_keys(): nacl.SignKeyPair;
         wallet(): $mol_ton_wallet;
-        wallet_address(): string;
+        wallet_address(): any;
         wallet_balance(): string;
         transfer_enqueue_list(): void;
         transfer_queue(next?: {
