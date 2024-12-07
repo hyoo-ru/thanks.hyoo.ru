@@ -10230,6 +10230,10 @@ var $;
 		highlight(){
 			return "";
 		}
+		syntax(){
+			const obj = new this.$.$mol_syntax2();
+			return obj;
+		}
 		View(){
 			const obj = new this.$.$mol_text_code();
 			(obj.text) = () => ((this.value()));
@@ -10237,6 +10241,7 @@ var $;
 			(obj.row_numb) = (id) => ((this.row_numb(id)));
 			(obj.sidebar_showed) = () => ((this.sidebar_showed()));
 			(obj.highlight) = () => ((this.highlight()));
+			(obj.syntax) = () => ((this.syntax()));
 			return obj;
 		}
 		attr(){
@@ -10308,6 +10313,7 @@ var $;
 	($mol_mem(($.$mol_textarea.prototype), "selection"));
 	($mol_mem(($.$mol_textarea.prototype), "submit"));
 	($mol_mem(($.$mol_textarea.prototype), "Edit"));
+	($mol_mem(($.$mol_textarea.prototype), "syntax"));
 	($mol_mem(($.$mol_textarea.prototype), "View"));
 	($.$mol_textarea_edit) = class $mol_textarea_edit extends ($.$mol_string) {
 		dom_name(){
@@ -10407,6 +10413,9 @@ var $;
             }
             row_numb(index) {
                 return index;
+            }
+            syntax() {
+                return this.$.$mol_syntax2_md_code;
             }
         }
         __decorate([
