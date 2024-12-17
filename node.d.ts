@@ -122,6 +122,7 @@ declare namespace $ {
 declare namespace $ {
     interface $mol_wire_sub extends $mol_wire_pub {
         temp: boolean;
+        pub_list: $mol_wire_pub[];
         track_on(): $mol_wire_sub | null;
         track_next(pub?: $mol_wire_pub): $mol_wire_pub | null;
         pub_off(pub_pos: number): void;
@@ -147,8 +148,8 @@ declare namespace $ {
         hasBody: (val: any, config: any) => boolean;
         body: (val: any, config: any) => any;
     }): void;
-    let $mol_dev_format_head: symbol;
-    let $mol_dev_format_body: symbol;
+    const $mol_dev_format_head: unique symbol;
+    const $mol_dev_format_body: unique symbol;
     function $mol_dev_format_native(obj: any): any[];
     function $mol_dev_format_auto(obj: any): any[];
     function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
@@ -168,7 +169,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
-        [x: symbol]: () => any[];
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
         get temp(): boolean;
@@ -183,6 +183,7 @@ declare namespace $ {
         complete(): void;
         complete_pubs(): void;
         absorb(quant?: $mol_wire_cursor): void;
+        [$mol_dev_format_head](): any[];
         get pub_empty(): boolean;
     }
 }
@@ -203,7 +204,6 @@ declare namespace $ {
 
 declare namespace $ {
     abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
-        [x: symbol]: string | (() => any[]);
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
         static warm: boolean;
@@ -223,6 +223,7 @@ declare namespace $ {
         reap(): void;
         toString(): string;
         toJSON(): string;
+        [$mol_dev_format_head](): any[];
         get $(): any;
         emit(quant?: $mol_wire_cursor): void;
         fresh(): this | undefined;
@@ -234,6 +235,7 @@ declare namespace $ {
             destructor(): void;
         };
         step(): Promise<null>;
+        destructor(): void;
     }
 }
 
@@ -921,7 +923,6 @@ declare namespace $ {
     function $mol_view_visible_height(): number;
     function $mol_view_state_key(suffix: string): string;
     class $mol_view extends $mol_object {
-        [x: symbol]: () => any[];
         static Root<This extends typeof $mol_view>(this: This, id: number): InstanceType<This>;
         autorun(): void;
         static autobind(): void;
@@ -978,6 +979,7 @@ declare namespace $ {
             [x: string]: (event: Event) => Promise<void>;
         };
         plugins(): readonly $mol_view[];
+        [$mol_dev_format_head](): any[];
         view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
         force_render(path: Set<$mol_view>): void;
         ensure_visible(view: $mol_view, align?: ScrollLogicalPosition): void;
@@ -1418,7 +1420,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_charset_encode(value: string): Uint8Array<ArrayBufferLike>;
+    function $mol_charset_encode(value: string): Uint8Array<ArrayBuffer>;
 }
 
 declare namespace $ {
@@ -1450,12 +1452,12 @@ declare namespace $ {
         type(): "" | $mol_file_type;
         name(): string;
         ext(): string;
-        abstract buffer(next?: Uint8Array): Uint8Array;
+        abstract buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
         text(next?: string, virt?: 'virt'): string;
         abstract sub(): $mol_file[];
         abstract resolve(path: string): $mol_file;
         abstract relate(base?: $mol_file): string;
-        abstract append(next: Uint8Array | string): void;
+        abstract append(next: Uint8Array<ArrayBuffer> | string): void;
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
         size(): number;
         open(...modes: readonly ('create' | 'exists_truncate' | 'exists_fail' | 'read_only' | 'write_only' | 'read_write' | 'append')[]): number;
@@ -1490,11 +1492,11 @@ declare namespace $ {
         stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
         ensure(): void;
         drop(): void;
-        buffer(next?: Uint8Array): Uint8Array<ArrayBufferLike>;
+        buffer(next?: Uint8Array<ArrayBuffer>): Uint8Array<ArrayBuffer>;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): string;
-        append(next: Uint8Array | string): undefined;
+        append(next: Uint8Array<ArrayBuffer> | string): undefined;
         open(...modes: readonly (keyof typeof $mol_file_mode_open)[]): number;
     }
 }
@@ -4647,7 +4649,7 @@ declare namespace $ {
         testnet(): string;
         mainnet(): string;
         is_testnet(next?: boolean): boolean;
-        provider(): any;
+        provider(): import("tonweb/dist/types/providers/http-provider").HttpProvider;
         api(): import("tonweb").default;
         wallet(key: ReturnType<$mol_ton_wallet['keys']> | string): $mol_ton_wallet;
         transaction(data: any): $mol_ton_transaction;
@@ -4655,11 +4657,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_base64_decode(base64: string): Uint8Array;
+    function $mol_base64_decode(base64: string): Uint8Array<ArrayBuffer>;
 }
 
 declare namespace $ {
-    function $mol_base64_decode_node(base64Str: string): Uint8Array;
+    function $mol_base64_decode_node(base64Str: string): Uint8Array<ArrayBuffer>;
 }
 
 declare namespace $ {
@@ -4736,7 +4738,6 @@ declare namespace $ {
         offset?: $mol_time_duration_config;
     };
     class $mol_time_moment extends $mol_time_base {
-        [x: symbol]: (() => any[]) | ((mode: "default" | "number" | "string") => string | number);
         constructor(config?: $mol_time_moment_config);
         readonly year: number | undefined;
         readonly month: number | undefined;
@@ -4758,6 +4759,7 @@ declare namespace $ {
         toJSON(): string;
         toString(pattern?: string): string;
         [Symbol.toPrimitive](mode: 'default' | 'number' | 'string'): string | number;
+        [$mol_dev_format_head](): any[];
         static patterns: {
             YYYY: (moment: $mol_time_moment) => string;
             AD: (moment: $mol_time_moment) => string;
@@ -4802,7 +4804,7 @@ declare namespace $ {
         amount_nano(): any;
         amount(): string;
         payload(): any;
-        comment(): "" | Uint8Array<ArrayBufferLike>;
+        comment(): "" | Uint8Array<ArrayBuffer>;
         fee(): any;
         fee_storage(): any;
         fee_other(): any;
@@ -4812,7 +4814,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_ton_wallet extends $mol_object2 {
-        static Wallet(type?: string): any;
+        static Wallet(type?: string): typeof import("tonweb/dist/types/contract/wallet/v3/wallet-v3-contract-r2").WalletV3ContractR2 | typeof import("tonweb/dist/types/contract/wallet/simple/simple-wallet-contract-r1").SimpleWalletContractR1 | typeof import("tonweb/dist/types/contract/wallet/simple/simple-wallet-contract-r2").SimpleWalletContractR2 | typeof import("tonweb/dist/types/contract/wallet/simple/simple-wallet-contract-r3").SimpleWalletContractR3 | typeof import("tonweb/dist/types/contract/wallet/v2/wallet-v2-contract-r1").WalletV2ContractR1 | typeof import("tonweb/dist/types/contract/wallet/v2/wallet-v2-contract-r2").WalletV2ContractR2 | typeof import("tonweb/dist/types/contract/wallet/v3/wallet-v3-contract-r1").WalletV3ContractR1 | typeof import("tonweb/dist/types/contract/wallet/v4/wallet-v4-contract-r1").WalletV4ContractR1 | typeof import("tonweb/dist/types/contract/wallet/v4/wallet-v4-contract-r2").WalletV4ContractR2;
         static words_create(): string[];
         static words_to_pair(words: string[]): nacl.SignKeyPair;
         ton(): $mol_ton;
@@ -4821,12 +4823,12 @@ declare namespace $ {
             secretKey: Uint8Array;
         };
         obj(): InstanceType<ReturnType<typeof $mol_ton_wallet.Wallet>>;
-        address(): any;
+        address(): import("tonweb/dist/types/utils/address").Address;
         info(force?: any): any;
-        seqno(): any;
+        seqno(): number | undefined;
         initialized(): boolean;
         balance(): string;
-        transfer(address: string, amount: string, payload: string, seqno: number): any;
+        transfer(address: string, amount: string, payload: string, seqno: number): import("tonweb").Method;
         send(address: string, amount: string, payload: string, seqno: number): boolean;
         transactions(count?: number): $mol_ton_transaction[];
     }
@@ -5157,7 +5159,7 @@ declare namespace $.$$ {
         export_words(): string;
         wallet_keys(): nacl.SignKeyPair;
         wallet(): $mol_ton_wallet;
-        wallet_address(): any;
+        wallet_address(): string;
         wallet_balance(): string;
         transfer_enqueue_list(): void;
         transfer_queue(next?: {
