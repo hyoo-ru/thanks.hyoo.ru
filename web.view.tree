@@ -724,9 +724,9 @@ $mol_text_span $mol_paragraph
 
 $mol_icon_wallet $mol_icon path \M21,18V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V6H12C10.89,6 10,6.9 10,8V16A2,2 0 0,0 12,18M12,16H22V8H12M16,13.5A1.5,1.5 0 0,1 14.5,12A1.5,1.5 0 0,1 16,10.5A1.5,1.5 0 0,1 17.5,12A1.5,1.5 0 0,1 16,13.5Z
 
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
+$mol_icon_chevron_left $mol_icon path \M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
 
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+$mol_icon_chevron_right $mol_icon path \M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
 
 $mol_number $mol_view
 	precision_view <= precision 1
@@ -736,6 +736,10 @@ $mol_number $mol_view
 	value? +NaN
 	enabled true
 	sub /
+		<= Dec $mol_button_minor
+			event_click? <=> event_dec? null
+			enabled <= dec_enabled <= enabled
+			sub / <= dec_icon $mol_icon_chevron_left
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
 			- \ https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
@@ -744,14 +748,10 @@ $mol_number $mol_view
 			hint <= hint \ 
 			enabled <= string_enabled <= enabled
 			submit? <=> submit? null
-		<= Dec $mol_button_minor
-			event_click? <=> event_dec? null
-			enabled <= dec_enabled <= enabled
-			sub / <= dec_icon $mol_icon_minus
 		<= Inc $mol_button_minor
 			event_click? <=> event_inc? null
 			enabled <= inc_enabled <= enabled
-			sub / <= inc_icon $mol_icon_plus
+			sub / <= inc_icon $mol_icon_chevron_right
 
 $mol_labeler $mol_list
 	rows /
